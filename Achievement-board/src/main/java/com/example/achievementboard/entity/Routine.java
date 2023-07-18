@@ -1,8 +1,8 @@
 package com.example.achievementboard.entity;
 
 import com.example.achievementboard.constants.BaseEntity;
-import com.example.achievementboard.constants.DaysOfTheWeek;
-import com.example.achievementboard.constants.Difficulty;
+import com.example.achievementboard.constants.enums.DaysOfTheWeek;
+import com.example.achievementboard.constants.enums.Difficulty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,10 +21,10 @@ public class Routine extends BaseEntity{
     private String name;
 
     @Column
-    private String descriptionWhyYouNeedThisRoutine;
+    private String descriptionHowToDoIt;
 
     @Column
-    private Integer hoursToSpend;
+    private Double hoursToSpend;
 
     @Column
     @Enumerated(EnumType.STRING)

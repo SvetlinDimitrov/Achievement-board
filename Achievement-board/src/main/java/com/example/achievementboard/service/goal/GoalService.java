@@ -1,4 +1,7 @@
 package com.example.achievementboard.service.goal;
 
-public interface GoalService {
+import com.example.achievementboard.constants.BaseService;
+import com.example.achievementboard.entity.Goal;
+
+public interface GoalService extends BaseService<Goal> {
 }

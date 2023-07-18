@@ -1,7 +1,7 @@
 package com.example.achievementboard.entity;
 
 import com.example.achievementboard.constants.BaseEntity;
-import com.example.achievementboard.constants.Difficulty;
+import com.example.achievementboard.constants.enums.Difficulty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,10 +30,10 @@ public class Achievement extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.MERGE)
+    @ManyToOne
     private Routine routine;
 
 }

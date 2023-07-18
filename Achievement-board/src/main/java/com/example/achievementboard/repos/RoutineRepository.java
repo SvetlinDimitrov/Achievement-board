@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RoutineRepository extends JpaRepository<Routine, Integer> {
+    Routine findByName(String name);
 }

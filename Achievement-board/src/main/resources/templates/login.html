@@ -6,23 +6,11 @@
     <meta name="viewport" content="width=, initial-scale=1.0" />
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
 </head>
 
 <body class="bg-dark text-white">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="#">Login</a>
-              <a class="nav-link active" aria-current="page" href="#">Register</a>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <nav th:replace ="~{fragments/headerLoginRester.html}"></nav>
     <div class="container text-center p-5">
         <h1>Achievement board</h1>
     </div>
@@ -30,26 +18,36 @@
         <img src="/pic/improve.png" class="rounded w-25" alt="...">
     </div>
     <div class="container w-25  p-5">
-        <form>
+        <form
+                th:action="@{/login}"
+                th:object="${loginUser}"
+                th:method = "post" >
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                <div class="alert alert-danger " role="alert">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       th:field = "${loginUser.email}"/>
+                <div th:if = "${#fields.hasErrors('email')}"
+                     th:errors = "*{email}"
+                        class="alert alert-danger " role="alert">
                     A simple danger alert—check it out!
                   </div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" />
-                <div class="alert alert-danger " role="alert">
+                <input type="password" class="form-control" id="exampleInputPassword1" th:field = "${loginUser.password}" />
+                <div th:if = "${#fields.hasErrors('password')}"
+                     th:errors = "*{password}"
+                        class="alert alert-danger " role="alert">
                     A simple danger alert—check it out!
                   </div>
             </div>
 
             <div class="mb-3">
                 <label for="exampleInputPassword2" class="form-label">ConfirmPassword</label>
-                <input type="password" class="form-control" id="exampleInputPassword2" />
-                <div class="alert alert-danger " role="alert">
+                <input type="password" class="form-control" id="exampleInputPassword2" th:field = "*{confirmPassword}"/>
+                <div th:field = "${loginUser.confirmPassword}"
+                     th:errors = "*{confirmPassword}"
+                        class="alert alert-danger " role="alert">
                     A simple danger alert—check it out!
                   </div>
             </div>

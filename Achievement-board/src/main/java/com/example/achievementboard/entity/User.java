@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class User extends BaseEntity{
     @Column
     private String username;
@@ -26,12 +26,12 @@ public class User extends BaseEntity{
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
     private List<Achievement> achievements = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
     private List<Goal> goals = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
     private List<Routine> routines = new ArrayList<>();
 }

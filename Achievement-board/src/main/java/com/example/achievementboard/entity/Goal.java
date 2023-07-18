@@ -1,9 +1,8 @@
 package com.example.achievementboard.entity;
 
 import com.example.achievementboard.constants.BaseEntity;
-import com.example.achievementboard.constants.Category;
-import com.example.achievementboard.constants.Difficulty;
-import com.example.achievementboard.constants.Importance;
+import com.example.achievementboard.constants.enums.Difficulty;
+import com.example.achievementboard.constants.enums.Importance;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,8 +32,7 @@ public class Goal extends BaseEntity {
     private LocalDate beginDate;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String category;
 
     @Column
     private String descriptionWhyYouWantToAchieveIt;
@@ -46,6 +44,6 @@ public class Goal extends BaseEntity {
     @ManyToOne
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.MERGE)
+    @ManyToOne
     private Routine routine;
 }

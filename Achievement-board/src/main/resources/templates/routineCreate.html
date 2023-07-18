@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+</head>
+
+<body class="bg-dark text-white">
+    <nav class="mb-5 navbar navbar-expand-lg navbar-white bg-white" aria-label="Tenth navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08"
+                aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-md-between" id="navbarsExample08">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Routines</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Goals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Achievements</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown08" data-bs-toggle="dropdown"
+                            aria-expanded="false">More About</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown08">
+                            <li><a class="dropdown-item" href="#">Motivation</a></li>
+                            
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container text-center p-5">
+        <h1>Add Routine</h1>
+    </div>
+    <div class="container text-center">
+        <img src="/res/routine.png" class="rounded w-25" alt="...">
+    </div>
+    <div class="container w-50 p-5 ">
+        <form>
+            <div >
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" />
+                <div class="alert alert-danger " role="alert">
+                    A simple danger alert—check it out!
+                  </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" />
+                <div class="alert alert-danger " role="alert">
+                    A simple danger alert—check it out!
+                  </div>
+            </div>
+
+            <div class="mb-3">
+                <select class="form-select" >
+                    <option selected>Difficulty</option>
+                    <option value="High">3</option>
+                    <option value="Medium">2</option>
+                    <option value="Low">1</option>
+                  </select>
+                <div class="alert alert-danger " role="alert">
+                    A simple danger alert—check it out!
+                  </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="hourseSpent" class="form-label">Hours Spending</label>
+                <input type="number" class="form-control" id="hourseSpent"  />
+                <div class="alert alert-danger " role="alert">
+                    A simple danger alert—check it out!
+                  </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="days" class="form-label">Days</label>
+                <input type="number" class="form-control" id="days" />
+                <div class="alert alert-danger " role="alert">
+                    A simple danger alert—check it out!
+                  </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Add Routine</button>
+        </form>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

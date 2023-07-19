@@ -35,4 +35,10 @@ public class Achievement extends BaseEntity {
     @ManyToOne
     private Routine routine;
 
+    @Column
+    private Long dayTook;
+
+    @Column
+    private String pictureRes;
+
 }

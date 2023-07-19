@@ -45,4 +45,7 @@ public class Goal extends BaseEntity {
 
     @ManyToOne
     private Routine routine;
+
+    @Column
+    private String pictureRes;
 }

@@ -13,4 +13,6 @@ public interface UserService extends BaseService<User> {
     void saveUser(RegisterUser user);
 
     boolean login(LoginUser user);
+
+    User getByEmail(String email);
 }

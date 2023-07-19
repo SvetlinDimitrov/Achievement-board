@@ -1,23 +1,26 @@
 package com.example.achievementboard.controller;
 
+import com.example.achievementboard.entity.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class BaseController {
-    public ModelAndView setView(String viewName , ModelAndView modelAndView){
+    protected ModelAndView setView(String viewName , ModelAndView modelAndView){
         modelAndView.setViewName(viewName);
         return modelAndView;
     }
 
-    public ModelAndView setView(String viewName){
+    protected ModelAndView setView(String viewName){
         return  setView(viewName , new ModelAndView());
     }
 
-    public ModelAndView redirect(String redirect , ModelAndView modelAndView){
+    protected ModelAndView redirect(String redirect , ModelAndView modelAndView){
         modelAndView.setViewName("redirect:" + redirect);
         return modelAndView;
     }
-
-
+    protected User getUser(HttpSession session){
+        return (User) session.getAttribute("user");
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.achievementboard.controller;
 
 import com.example.achievementboard.constants.dtos.LoginUser;
+import com.example.achievementboard.entity.User;
 import com.example.achievementboard.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -43,7 +44,8 @@ public class LoginController extends BaseController {
             return setView("login");
         }
 
-        session.setAttribute("user" , user);
+        User userForSession = userService.getByEmail(user.getEmail());
+        session.setAttribute("user" , userForSession);
 
         return redirect("/" , new ModelAndView());
     }

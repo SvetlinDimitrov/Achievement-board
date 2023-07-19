@@ -1,4 +1,4 @@
-package com.example.achievementboard.constants;
+package com.example.achievementboard.entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

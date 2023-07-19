@@ -1,4 +1,4 @@
-package com.example.achievementboard.constants;
+package com.example.achievementboard.service;
 
 import java.util.List;
 

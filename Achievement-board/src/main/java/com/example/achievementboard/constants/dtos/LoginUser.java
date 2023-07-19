@@ -1,5 +1,7 @@
 package com.example.achievementboard.constants.dtos;
 
+import com.example.achievementboard.constants.exeptions.samePasswords.SamePasswordConstraint;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,13 +12,15 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@SamePasswordConstraint
 public class LoginUser {
 
-    @NotBlank
+    @NotBlank(message = "You need to fill this")
+    @Email
     private String email;
-    @NotBlank
+
+    @NotBlank(message = "You need to fill this")
     private String password;
 
-    //TODO::Custom password validation (check if both password matches)
     private String confirmPassword;
 }

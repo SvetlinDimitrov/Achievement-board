@@ -45,11 +45,12 @@
             <div class="mb-3">
                 <label for="exampleInputPassword2" class="form-label">ConfirmPassword</label>
                 <input type="password" class="form-control" id="exampleInputPassword2" th:field = "*{confirmPassword}"/>
-                <div th:field = "${loginUser.confirmPassword}"
-                     th:errors = "*{confirmPassword}"
+                <div th:if = "${#fields.hasErrors('${loginUser}') || #fields.hasErrors('confirmPassword')}"
+                     th:errors = "${loginUser}"
                         class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
+                    You need to fill this !
                   </div>
+
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>

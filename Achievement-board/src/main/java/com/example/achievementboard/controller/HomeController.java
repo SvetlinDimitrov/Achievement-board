@@ -1,6 +1,5 @@
 package com.example.achievementboard.controller;
 
-import com.example.achievementboard.constants.BaseController;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

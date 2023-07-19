@@ -1,4 +1,4 @@
-package com.example.achievementboard.constants;
+package com.example.achievementboard.controller;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;

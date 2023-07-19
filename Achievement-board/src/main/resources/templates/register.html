@@ -14,45 +14,59 @@
         <h1>Achievement board</h1>
     </div>
     <div class="container w-25  p-5">
-        <form>
+        <form
+                th:action="@{/register}"
+                th:object="${registerUser}"
+                th:method = "post"
+        >
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1"/>
-                <div class="alert alert-danger " role="alert">
+                <input type="email" class="form-control" id="exampleInputEmail1" th:field = "${registerUser.email}"/>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('email')}"
+                     th:errors = "*{email}">
                     A simple danger alert—check it out!
                   </div>
-                <div id="emailHelp" class="form-text text-white">
-                    We'll never share your email with anyone else.
-                </div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputUsername" class="form-label">Username</label>
-                <input type="text" class="form-control" id="exampleInputUsername"/>
-                <div class="alert alert-danger " role="alert">
+                <input type="text" class="form-control" id="exampleInputUsername" th:field = "${registerUser.username}"/>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('username')}"
+                     th:errors = "*{username}">
                     A simple danger alert—check it out!
                   </div>
+                <div id="usernameHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('username')}">
+                    Your username must be at least 4 chars long !
+                </div>
             </div>
 
             <div class="mb-3">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" class="form-control" id="age"/>
-                <div class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
-                  </div>
-            </div>
-            <div class="mb-3">
                 <label for="birthDate" class="form-label">DateBirth</label>
-                <input type="date" class="form-control" id="birthDate"/>
-                <div class="alert alert-danger " role="alert">
+                <input type="date" class="form-control" id="birthDate" th:field = "${registerUser.birthDate}"/>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('birthDate')}"
+                     th:errors = "*{birthDate}">
                     A simple danger alert—check it out!
                   </div>
+                <div id="ageHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('birthDate')}">
+                    You must be at least 18 years old !
+                </div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" />
-                <div class="alert alert-danger " role="alert">
+                <input type="password" class="form-control" id="exampleInputPassword1" th:field = "${registerUser.password}" />
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('password')}"
+                     th:errors = "*{password}">
                     A simple danger alert—check it out!
                   </div>
+                <div id="passwordHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('password')}">
+                    Your password must be at least 5 chars long !
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">Register</button>

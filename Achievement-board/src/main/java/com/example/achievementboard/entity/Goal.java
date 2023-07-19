@@ -1,6 +1,5 @@
 package com.example.achievementboard.entity;
 
-import com.example.achievementboard.constants.BaseEntity;
 import com.example.achievementboard.constants.enums.Difficulty;
 import com.example.achievementboard.constants.enums.Importance;
 import jakarta.persistence.*;

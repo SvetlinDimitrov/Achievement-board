@@ -1,6 +1,5 @@
 package com.example.achievementboard.entity;
 
-import com.example.achievementboard.constants.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

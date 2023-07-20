@@ -10,137 +10,168 @@
 </head>
 
 <body class="bg-dark text-white">
-    <nav class="mb-5 navbar navbar-expand-lg navbar-white bg-white" aria-label="Tenth navbar example">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08"
-                aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-md-between" id="navbarsExample08">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Routines</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Goals</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Achievements</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown08" data-bs-toggle="dropdown"
-                            aria-expanded="false">More About</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown08">
-                            <li><a class="dropdown-item" href="#">Motivation</a></li>
-                            
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> 
+<ul class="nav nav-tabs bg-dark justify-content-between">
+    <div class="">
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white " th:href="@{/}">Home</a>
+        </li>
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
+        </li>
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
+        </li>
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+        </li>
+    </div>
+    <div class="">
+        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+    </div>
+</ul>
     <div class="container text-center p-2">
         <h1>Edit Goal</h1>
     </div>
     <div class="container w-50 p-5 ">
-        <form>
+        <form
+                th:action="@{/goal/edit}"
+                th:object="${currentGoal}"
+                th:method = "post"
+        >
             <div >
                 <label for="naemGoal" class="form-label">Name</label>
-                <input type="text" class="form-control" id="naemGoal" />
-                <div class="alert alert-danger " role="alert">
+                <input type="text" class="form-control" id="naemGoal" th:field = "${currentGoal.name}"/>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('name')}"
+                     th:errors = "*{name}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="nameHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('name')}">
+                    You must write the name !
+                </div>
             </div>
-            
+
             <div class="mb-3">
                 <label for="descriptionHowToDoIt" class="form-label">How you gonna do it</label>
-                <input type="text" class="form-control" id="descriptionHowToDoIt" />
-                <div class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
-                  </div>
+                <input type="text" class="form-control" id="descriptionHowToDoIt" th:field = "${currentGoal.descriptionHowToDoIt}"/>
             </div>
 
             <div class="mb-3">
                 <label for="descriptionWhy" class="form-label">Why you wanna do it</label>
-                <input type="text" class="form-control" id="descriptionWhy" />
-                <div class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
-                  </div>
+                <input type="text" class="form-control" id="descriptionWhy" th:field = "${currentGoal.descriptionWhyYouWantToAchieveIt}"/>
             </div>
 
             <div class="mb-3">
                 <label for="category" class="form-label">Category</label>
-                <input type="text" class="form-control" id="category"  />
-                <div class="alert alert-danger " role="alert">
+                <input type="text" class="form-control" id="category"  th:field = "${currentGoal.category}"/>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('category')}"
+                     th:errors = "*{category}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="categoryHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('category')}">
+                    You must write category !
+                </div>
             </div>
 
             <div class="mb-3">
-                <select class="form-select" >
-                    <option selected>Importance level</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                <div class="alert alert-danger " role="alert">
+                <label for="importance">Importance</label>
+                <select th:field="${currentGoal.importance}"
+                        id="importance" class="form-select">
+                    <option value="" selected>Select importance</option>
+                    <option th:each = "importance : ${T(com.example.achievementboard.constants.enums.Importance).values()}"
+                            th:text="${importance}" th:value="${importance}"></option>
+                </select>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('importance')}"
+                     th:errors = "*{importance}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="ImportanceHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('importance')}">
+                    You must choose importance !
+                </div>
             </div>
 
             <div class="mb-3">
-                <select class="form-select" >
-                    <option selected>Difficulty</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                <div class="alert alert-danger " role="alert">
+                <label for="diff">Difficulty</label>
+                <select th:field="${currentGoal.difficulty}"
+                        id="diff" class="form-select">
+                    <option value="" selected>Select difficulty</option>
+                    <option th:each = "diff : ${T(com.example.achievementboard.constants.enums.Difficulty).values()}"
+                            th:text="${diff}" th:value="${diff}">Select level</option>
+                </select>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('difficulty')}"
+                     th:errors = "*{difficulty}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="difficultyHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('difficulty')}">
+                    You must choose difficulty !
+                </div>
             </div>
 
             <div class="mb-3">
-                <select class="form-select" >
-                    <option selected>Routines</option>
-                    <option value="High">1</option>
-                    <option value="Medium">2</option>
-                    <option value="Low">3</option>
-                  </select>
-                <div class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
-                  </div>
+                <label for="route">Select Route</label>
+                <select th:field = "${currentGoal.routineId}"
+                        id="route" class="form-select">
+                    <option value="0" selected>Select Route</option>
+                    <option th:each = "routine : ${allRoutines}"
+                            th:value="${routine.id}"
+                            th:text = "${routine.name}"></option>
+                </select>
+                <div id="routeHelper" class="form-text text-white">
+                    It`s not required !
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="startDate" class="form-label">Start Date</label>
-                <input type="date" class="form-control" id="startDate"  />
-                <div class="alert alert-danger " role="alert">
+                <input type="date" class="form-control" id="startDate" th:field = "${currentGoal.beginDate}" />
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('beginDate')}"
+                     th:errors = "*{beginDate}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="startDateHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('beginDate')}">
+                    You must fill the date !
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="endDate" class="form-label">End Date</label>
-                <input type="date" class="form-control" id="endDate" />
-                <div class="alert alert-danger " role="alert">
+                <input type="date" class="form-control" id="endDate" th:field = "${currentGoal.endDate}"/>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('endDate')}"
+                     th:errors = "*{endDate}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="endDateHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('endDate')}">
+                    You must fill the date !
+                </div>
+            </div>
+            <div class="mb-3" hidden="hidden">
+                <label for="descriptionWhy" class="form-label">Why you wanna do it</label>
+                <input type="text" class="form-control" id="id" th:field = "${currentGoal.id}"/>
             </div>
 
             <div class="container">
                 <div class="row">
-                    <div class="col col align-self-start">
+                    <div class="col col align-self-start ">
                         <button type="submit" class="btn btn-primary w-50">Edit</button>
                     </div>
-                    <div class="col align-self-end text-end">
-                        <button type="submit" class="btn btn-primary w-50">Finish Goal</button>
+                    <div class="col align-self-center">
+                        <a type="submit" th:href="@{/goal/finish/{id}(id=${currentGoal.id})}" class="btn btn-primary w-50">Finish Goal</a>
                     </div>
-                    
+                    <div class="col align-self-end text-end">
+                        <a type="submit" th:href="@{/goal/delete/{id}(id=${currentGoal.id})}" class="btn btn-primary w-50">Delete</a>
+                    </div>
+
                 </div>
             </div>
            

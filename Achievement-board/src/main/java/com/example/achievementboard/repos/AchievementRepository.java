@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AchievementRepository extends JpaRepository<Achievement , Integer> {
+public interface AchievementRepository extends JpaRepository<Achievement , Long> {
     List<Achievement> findAllByUser(User user);
 }
 

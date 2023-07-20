@@ -25,12 +25,12 @@ public class User extends BaseEntity{
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user" , cascade = {CascadeType.MERGE , CascadeType.REMOVE} , fetch = FetchType.EAGER)
     private List<Achievement> achievements = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user" , cascade = {CascadeType.MERGE , CascadeType.REMOVE} , fetch = FetchType.EAGER)
     private List<Goal> goals = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE , CascadeType.REMOVE}  , fetch = FetchType.EAGER)
     private List<Routine> routines = new ArrayList<>();
 }

@@ -1,4 +1,4 @@
-package com.example.achievementboard.controller;
+package com.example.achievementboard.web.controller;
 
 import com.example.achievementboard.entity.User;
 import jakarta.servlet.http.HttpSession;
@@ -23,4 +23,5 @@ public class BaseController {
     protected User getUser(HttpSession session){
         return (User) session.getAttribute("user");
     }
+
 }

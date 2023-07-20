@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RoutineRepository extends JpaRepository<Routine, Integer> {
+public interface RoutineRepository extends JpaRepository<Routine, Long> {
     Routine findByName(String name);
     List<Routine> findAllByUser(User user);
 }

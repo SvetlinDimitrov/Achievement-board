@@ -50,7 +50,7 @@
                     <p th:text="'Day Took: ' + ${a.dayTook}"></p>
                     <p th:text="'Difficulty: ' + ${a.difficulty}"></p>
 
-                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                    <p><a class="btn btn-secondary" th:href="@{/achievement/detail/{id}(id=*{a.id})}">View details »</a></p>
                 </div>
 
             </div>

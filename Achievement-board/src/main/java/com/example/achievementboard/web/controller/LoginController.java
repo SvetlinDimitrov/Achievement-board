@@ -1,4 +1,4 @@
-package com.example.achievementboard.controller;
+package com.example.achievementboard.web.controller;
 
 import com.example.achievementboard.constants.dtos.LoginUser;
 import com.example.achievementboard.entity.User;
@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +32,6 @@ public class LoginController extends BaseController {
                               BindingResult result,
                               HttpSession session
                               ) {
-
         if(result.hasErrors()){
             return setView("login");
         }

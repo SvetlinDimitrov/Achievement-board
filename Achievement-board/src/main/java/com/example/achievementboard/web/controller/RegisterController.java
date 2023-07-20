@@ -1,4 +1,4 @@
-package com.example.achievementboard.controller;
+package com.example.achievementboard.web.controller;
 
 import com.example.achievementboard.constants.dtos.RegisterUser;
 import com.example.achievementboard.service.user.UserService;

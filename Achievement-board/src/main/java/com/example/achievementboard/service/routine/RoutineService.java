@@ -1,5 +1,6 @@
 package com.example.achievementboard.service.routine;
 
+import com.example.achievementboard.constants.dtos.goal.GoalView;
 import com.example.achievementboard.entity.User;
 import com.example.achievementboard.service.BaseService;
 import com.example.achievementboard.entity.Routine;
@@ -14,4 +15,5 @@ public interface RoutineService extends BaseService<Routine> {
     List<Routine> getAllRoutinesSortedByDifficulty(User user);
 
     List<Routine> getAllRoutinesSortByHourSpend(User user);
+
 }

@@ -7,7 +7,7 @@ public interface BaseService<T> {
 
     void saveAll(List<T> build);
 
-    T getById(Integer id);
+    T getById(Long id);
 
     void save(T entity);
 }

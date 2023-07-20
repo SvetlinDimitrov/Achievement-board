@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User getById(Integer id) {
+    public User getById(Long id) {
         return repository.findById(id).orElseThrow();
     }
 

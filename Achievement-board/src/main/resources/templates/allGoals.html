@@ -52,7 +52,7 @@
                 <p th:text = "'Category: ' + ${g.category}"></p>
                 <p th:text = "'Importance: ' + ${g.importance}"></p>
                 <p th:text = "'Difficulty: ' + ${g.difficulty}"></p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                <p><a class="btn btn-secondary" th:href="@{/goal/detail/{id}(id=*{g.id})}">View details »</a></p>
             </div>
 
         </div>

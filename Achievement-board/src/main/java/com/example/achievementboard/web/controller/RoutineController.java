@@ -1,4 +1,4 @@
-package com.example.achievementboard.controller;
+package com.example.achievementboard.web.controller;
 
 import com.example.achievementboard.entity.User;
 import com.example.achievementboard.service.routine.RoutineService;
@@ -17,9 +17,6 @@ public class RoutineController extends BaseController{
 
     @GetMapping
     public ModelAndView getRoutinePage(HttpSession session , ModelAndView modelAndView){
-        if(session.getAttribute("user") == null){
-            return redirect("/login" , new ModelAndView());
-        }
         User user = getUser(session);
 
         modelAndView.addObject("allRoutines" , service.getAllRoutines(user));
@@ -28,9 +25,6 @@ public class RoutineController extends BaseController{
 
     @GetMapping("/sortByDifficulty")
     public ModelAndView getRoutinePageSortedByDifficulty(HttpSession session , ModelAndView modelAndView){
-        if(session.getAttribute("user") == null){
-            return redirect("/login" , new ModelAndView());
-        }
         User user = getUser(session);
 
         modelAndView.addObject("allRoutines" , service.getAllRoutinesSortedByDifficulty(user));
@@ -39,9 +33,6 @@ public class RoutineController extends BaseController{
 
     @GetMapping("/sortByHourSpend")
     public ModelAndView getRoutinePageSortedByHourSpend(HttpSession session , ModelAndView modelAndView){
-        if(session.getAttribute("user") == null){
-            return redirect("/login" , new ModelAndView());
-        }
         User user = getUser(session);
 
         modelAndView.addObject("allRoutines" , service.getAllRoutinesSortByHourSpend(user));

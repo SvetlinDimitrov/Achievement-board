@@ -1,5 +1,6 @@
 package com.example.achievementboard.entity;
 
+import com.example.achievementboard.constants.dtos.goal.GoalView;
 import com.example.achievementboard.constants.enums.Difficulty;
 import com.example.achievementboard.constants.enums.Importance;
 import jakarta.persistence.*;
@@ -48,4 +49,19 @@ public class Goal extends BaseEntity {
 
     @Column
     private String pictureRes;
+
+    public GoalView toGoalView(){
+        return GoalView.builder()
+                .id(getId())
+                .name(name)
+                .importance(importance)
+                .descriptionHowToDoIt(descriptionHowToDoIt)
+                .endDate(endDate)
+                .beginDate(beginDate)
+                .category(category)
+                .descriptionWhyYouWantToAchieveIt(descriptionWhyYouWantToAchieveIt)
+                .difficulty(difficulty)
+                .routineId(routine == null ? 0: routine.getId())
+                .build();
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.achievementboard.service.routine;
 
+import com.example.achievementboard.constants.dtos.goal.GoalView;
 import com.example.achievementboard.entity.Achievement;
 import com.example.achievementboard.entity.Goal;
 import com.example.achievementboard.entity.Routine;
@@ -26,7 +27,7 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
-    public Routine getById(Integer id) {
+    public Routine getById(Long id) {
         return repository.findById(id).orElseThrow();
     }
 
@@ -58,4 +59,5 @@ public class RoutineServiceImpl implements RoutineService {
         allByUser.sort((g1,g2) -> g2.getHoursToSpend().compareTo(g1.getHoursToSpend()));
         return allByUser;
     }
+
 }

@@ -54,7 +54,7 @@ public class SeedServiceImpl implements SeedService {
                             .endDate(LocalDate.parse("2026-12-27"))
                             .beginDate(LocalDate.now())
                             .category("sport")
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .difficulty(Difficulty.HARD)
                             .routine(routineService.getRouteByName("Walk"))
                             .build(),
@@ -66,7 +66,7 @@ public class SeedServiceImpl implements SeedService {
                             .endDate(LocalDate.parse("2025-12-27"))
                             .beginDate(LocalDate.now())
                             .category("sport")
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .difficulty(Difficulty.MEDIUM)
                             .routine(routineService.getRouteByName("Gym"))
                             .build(),
@@ -78,7 +78,7 @@ public class SeedServiceImpl implements SeedService {
                             .endDate(LocalDate.parse("2024-12-27"))
                             .beginDate(LocalDate.now())
                             .category("sport")
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .difficulty(Difficulty.EASY)
                             .routine(routineService.getRouteByName("Meditation"))
                             .build()
@@ -97,7 +97,7 @@ public class SeedServiceImpl implements SeedService {
                             .startDate(LocalDate.parse("2022-09-22"))
                             .endDate(LocalDate.parse("2022-12-27"))
                             .routine(routineService.getRouteByName("Walk"))
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .difficulty(Difficulty.MEDIUM)
                             .build(),
                     Achievement.builder()
@@ -106,7 +106,7 @@ public class SeedServiceImpl implements SeedService {
                             .startDate(LocalDate.parse("2021-11-01"))
                             .endDate(LocalDate.parse("2021-11-23"))
                             .routine(routineService.getRouteByName("Meditation"))
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .difficulty(Difficulty.EASY)
                             .build(),
                     Achievement.builder()
@@ -115,7 +115,7 @@ public class SeedServiceImpl implements SeedService {
                             .startDate(LocalDate.parse("2023-01-27"))
                             .endDate(LocalDate.parse("2023-12-27"))
                             .routine(routineService.getRouteByName("Gym"))
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .difficulty(Difficulty.HARD)
                             .build()
             ));
@@ -133,7 +133,7 @@ public class SeedServiceImpl implements SeedService {
                             .descriptionHowToDoIt("meditate 20 min every morning")
                             .hoursToSpend(0.20)
                             .difficulty(Difficulty.EASY)
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .days(Arrays.stream(DaysOfTheWeek.values()).toList())
                             .build(),
                     Routine.builder()
@@ -141,7 +141,7 @@ public class SeedServiceImpl implements SeedService {
                             .descriptionHowToDoIt("just gonna lift")
                             .hoursToSpend(1.4)
                             .difficulty(Difficulty.MEDIUM)
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .days(List.of(DaysOfTheWeek.MONDAY, DaysOfTheWeek.TUESDAY, DaysOfTheWeek.FRIDAY, DaysOfTheWeek.SATURDAY))
                             .build(),
                     Routine.builder()
@@ -149,7 +149,7 @@ public class SeedServiceImpl implements SeedService {
                             .descriptionHowToDoIt("walk with 4km speed per hour")
                             .hoursToSpend(0.20)
                             .difficulty(Difficulty.EASY)
-                            .user(userService.getById(1))
+                            .user(userService.getById(1L))
                             .days(Arrays.stream(DaysOfTheWeek.values()).toList())
                             .build()
 

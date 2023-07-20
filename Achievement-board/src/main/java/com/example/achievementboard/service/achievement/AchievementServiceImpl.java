@@ -1,9 +1,9 @@
 package com.example.achievementboard.service.achievement;
 
-import com.example.achievementboard.constants.dtos.AchievementCreate;
+import com.example.achievementboard.constants.dtos.achievement.AchievementCreate;
+import com.example.achievementboard.constants.dtos.achievement.AchievementView;
 import com.example.achievementboard.constants.enums.Difficulty;
 import com.example.achievementboard.entity.Achievement;
-import com.example.achievementboard.entity.Routine;
 import com.example.achievementboard.entity.User;
 import com.example.achievementboard.repos.AchievementRepository;
 import com.example.achievementboard.service.routine.RoutineService;
@@ -31,7 +31,7 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public Achievement getById(Integer id) {
+    public Achievement getById(Long id) {
         return repository.findById(id).orElseThrow();
     }
 
@@ -76,6 +76,26 @@ public class AchievementServiceImpl implements AchievementService {
         }
 
         save(achievement);
+    }
+
+    @Override
+    public void edit(AchievementView achievementView) {
+        Achievement achievementToEdit = getById(achievementView.getId());
+        achievementToEdit.setName(achievementView.getName());
+        achievementToEdit.setDescriptionHowItWasSucceeded(achievementView.getDescriptionHowItWasSucceeded());
+        achievementToEdit.setStartDate(achievementView.getStartDate());
+        achievementToEdit.setEndDate(achievementView.getEndDate());
+        achievementToEdit.setDifficulty(achievementView.getDifficulty());
+
+        achievementToEdit.setRoutine(achievementView.getRoutineId() == 0 ?
+                null : routineService.getById(achievementView.getRoutineId()));
+
+        save(achievementToEdit);
+    }
+
+    @Override
+    public void deleteAch(Long l) {
+        repository.deleteById(l);
     }
 
     private void fillAchievement(Achievement entity) {

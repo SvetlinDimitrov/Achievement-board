@@ -1,4 +1,4 @@
-package com.example.achievementboard.controller;
+package com.example.achievementboard.web.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -11,10 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController extends BaseController {
 
     @GetMapping({"/home",""})
-    public ModelAndView getHome(HttpSession session){
-        if(session.getAttribute("user") == null){
-            return redirect("/login" , new ModelAndView());
-        }
+    public ModelAndView getHome(){
         return setView("home");
     }
 

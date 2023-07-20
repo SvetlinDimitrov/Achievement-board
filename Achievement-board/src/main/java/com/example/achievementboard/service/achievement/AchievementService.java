@@ -2,6 +2,7 @@ package com.example.achievementboard.service.achievement;
 
 import com.example.achievementboard.constants.dtos.achievement.AchievementCreate;
 import com.example.achievementboard.constants.dtos.achievement.AchievementView;
+import com.example.achievementboard.entity.Routine;
 import com.example.achievementboard.entity.User;
 import com.example.achievementboard.service.BaseService;
 import com.example.achievementboard.entity.Achievement;
@@ -20,4 +21,6 @@ public interface AchievementService extends BaseService<Achievement> {
     void edit(AchievementView achievementView);
 
     void deleteAch(Long l);
+
+    List<Achievement> getAllAchievementsByRoutine(Routine routine);
 }

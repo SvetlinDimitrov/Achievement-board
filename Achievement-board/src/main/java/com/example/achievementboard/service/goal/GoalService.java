@@ -2,6 +2,7 @@ package com.example.achievementboard.service.goal;
 
 import com.example.achievementboard.constants.dtos.goal.GoalCreate;
 import com.example.achievementboard.constants.dtos.goal.GoalView;
+import com.example.achievementboard.entity.Routine;
 import com.example.achievementboard.entity.User;
 import com.example.achievementboard.service.BaseService;
 import com.example.achievementboard.entity.Goal;
@@ -24,4 +25,6 @@ public interface GoalService extends BaseService<Goal> {
     void deleteGoal(Long l);
 
     void finishGoal(Long l);
+
+    List<Goal> getAllGoalsByRoutine(Routine routine);
 }

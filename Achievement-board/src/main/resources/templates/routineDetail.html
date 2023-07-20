@@ -10,86 +10,108 @@
 </head>
 
 <body class="bg-dark text-white">
-    <nav class="mb-5 navbar navbar-expand-lg navbar-white bg-white" aria-label="Tenth navbar example">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08"
-                aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-md-between" id="navbarsExample08">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Routines</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Goals</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Achievements</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown08" data-bs-toggle="dropdown"
-                            aria-expanded="false">More About</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown08">
-                            <li><a class="dropdown-item" href="#">Motivation</a></li>
-                            
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container text-center p-2">
+<ul class="nav nav-tabs bg-dark justify-content-between">
+    <div class="">
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white " th:href="@{/}">Home</a>
+        </li>
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
+        </li>
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
+        </li>
+        <li class="d-inline-block nav-item">
+            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+        </li>
+    </div>
+    <div class="">
+        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+    </div>
+</ul>
+    <div class="container text-center p-5">
         <h1>Edit Routine</h1>
     </div>
     <div class="container w-50 p-5 ">
-        <form>
+        <form
+                th:action="@{/routine/edit}"
+                th:object="${viewRoutine}"
+                th:method = "post"
+        >
             <div >
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" />
-                <div class="alert alert-danger " role="alert">
+                <input type="text" class="form-control" id="name" th:field = "${viewRoutine.name}"/>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('name')}"
+                     th:errors = "*{name}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="usernameHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('name')}">
+                    You need to fill this !
+                </div>
             </div>
-            
+
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="description" />
-                <div class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
-                  </div>
+                <input type="text" class="form-control" id="description" th:field = "${viewRoutine.description}"/>
             </div>
 
             <div class="mb-3">
-                <select class="form-select" >
-                    <option selected>Difficulty</option>
-                    <option value="High">3</option>
-                    <option value="Medium">2</option>
-                    <option value="Low">1</option>
-                  </select>
-                <div class="alert alert-danger " role="alert">
+                <label for="diff">Difficulty</label>
+                <select th:field="${viewRoutine.difficulty}"
+                        id="diff" class="form-select">
+                    <option value="" selected>Select difficulty</option>
+                    <option th:each = "diff : ${T(com.example.achievementboard.constants.enums.Difficulty).values()}"
+                            th:text="${diff}" th:value="${diff}">Select level</option>
+                </select>
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('difficulty')}"
+                     th:errors = "*{difficulty}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="difficultyHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('difficulty')}">
+                    You must choose difficulty !
+                </div>
             </div>
 
             <div class="mb-3">
-                <label for="hourseSpent" class="form-label">Hours Spending</label>
-                <input type="number" class="form-control" id="hourseSpent"  />
-                <div class="alert alert-danger " role="alert">
+                <label for="hoursSpend" class="form-label">Hours Spending</label>
+                <input type="number" step="0.1" class="form-control" id="hoursSpend" th:field = "${viewRoutine.hoursSpend}" />
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('hoursSpend')}"
+                     th:errors = "*{hoursSpend}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="hoursSpendHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('hoursSpend')}">
+                    You must spend at least some time on your routines.
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="days" class="form-label">Days</label>
-                <input type="number" class="form-control" id="days" />
-                <div class="alert alert-danger " role="alert">
+                <input  id = "days" th:field="*{days}"
+                        name="days"
+                        th:each="day : ${T(com.example.achievementboard.constants.enums.DaysOfTheWeek).values()}"
+                        class="m-3" type="checkbox"
+                        th:value="${day}"
+                        th:text="${day}">
+                <div class="alert alert-danger " role="alert"
+                     th:if = "${#fields.hasErrors('days')}"
+                     th:errors = "*{days}">
                     A simple danger alert—check it out!
-                  </div>
+                </div>
+                <div id="daysHelper" class="form-text text-white"
+                     th:if = "${!#fields.hasErrors('days')}">
+                    Choose at least 1 day!
+                </div>
+            </div>
+
+            <div hidden="hidden" class="mb-3">
+                <label for="id" class="form-label">Id</label>
+                <input  id = "id" th:field="*{id}">
             </div>
 
             <div class="container">
@@ -98,7 +120,7 @@
                         <button type="submit" class="btn btn-primary w-50">Edit</button>
                     </div>
                     <div class="col align-self-end text-end">
-                        <button type="submit" class="btn btn-primary w-50">Delete</button>
+                        <a type="submit" th:href="@{/routine/delete/{id}(id=${viewRoutine.id})}" class="btn btn-primary w-50">Delete</a>
                     </div>
                     
                 </div>

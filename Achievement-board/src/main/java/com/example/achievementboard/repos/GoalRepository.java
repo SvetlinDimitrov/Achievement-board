@@ -1,6 +1,7 @@
 package com.example.achievementboard.repos;
 
 import com.example.achievementboard.entity.Goal;
+import com.example.achievementboard.entity.Routine;
 import com.example.achievementboard.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,5 @@ import java.util.List;
 public interface GoalRepository extends JpaRepository<Goal, Long> {
     List<Goal> findAllByUser(User user);
     List<Goal> findAllByUserOrderByEndDate(User user);
+    List<Goal> findAllByRoutine(Routine routine);
 }

@@ -5,6 +5,7 @@ import com.example.achievementboard.constants.dtos.goal.GoalView;
 import com.example.achievementboard.constants.enums.Difficulty;
 import com.example.achievementboard.entity.Achievement;
 import com.example.achievementboard.entity.Goal;
+import com.example.achievementboard.entity.Routine;
 import com.example.achievementboard.entity.User;
 import com.example.achievementboard.repos.GoalRepository;
 import com.example.achievementboard.service.achievement.AchievementService;
@@ -118,6 +119,11 @@ public class GoalServiceImpl implements GoalService {
                 .build();
         achievementService.save(newAchievement);
         deleteGoal(id);
+    }
+
+    @Override
+    public List<Goal> getAllGoalsByRoutine(Routine routine) {
+        return goalRepository.findAllByRoutine(routine);
     }
 
     private static void setPicture(Goal entity) {

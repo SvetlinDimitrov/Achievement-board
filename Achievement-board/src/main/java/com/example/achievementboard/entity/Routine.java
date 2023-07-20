@@ -1,5 +1,6 @@
 package com.example.achievementboard.entity;
 
+import com.example.achievementboard.constants.dtos.routine.RoutineView;
 import com.example.achievementboard.constants.enums.DaysOfTheWeek;
 import com.example.achievementboard.constants.enums.Difficulty;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Routine extends BaseEntity{
+public class Routine extends BaseEntity {
 
     @Column
     private String name;
@@ -36,4 +37,14 @@ public class Routine extends BaseEntity{
     @ManyToOne
     private User user;
 
+    public RoutineView toRoutineView() {
+        return RoutineView.builder()
+                .id(getId())
+                .name(name)
+                .description(descriptionHowToDoIt)
+                .hoursSpend(hoursToSpend)
+                .difficulty(difficulty)
+                .days(days)
+                .build();
+    }
 }

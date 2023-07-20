@@ -56,7 +56,7 @@ public class SeedServiceImpl implements SeedService {
                             .category("sport")
                             .user(userService.getById(1L))
                             .difficulty(Difficulty.HARD)
-                            .routine(routineService.getRouteByName("Walk"))
+                            .routine(routineService.getRandomRoutine())
                             .build(),
                     Goal.builder()
                             .name("Get Jacked")
@@ -68,7 +68,7 @@ public class SeedServiceImpl implements SeedService {
                             .category("sport")
                             .user(userService.getById(1L))
                             .difficulty(Difficulty.MEDIUM)
-                            .routine(routineService.getRouteByName("Gym"))
+                            .routine(routineService.getRandomRoutine())
                             .build(),
                     Goal.builder()
                             .name("Meditation")
@@ -80,7 +80,7 @@ public class SeedServiceImpl implements SeedService {
                             .category("sport")
                             .user(userService.getById(1L))
                             .difficulty(Difficulty.EASY)
-                            .routine(routineService.getRouteByName("Meditation"))
+                            .routine(routineService.getRandomRoutine())
                             .build()
 
             ));
@@ -96,7 +96,7 @@ public class SeedServiceImpl implements SeedService {
                             .descriptionHowItWasSucceeded("ï was a beast and i just show it")
                             .startDate(LocalDate.parse("2022-09-22"))
                             .endDate(LocalDate.parse("2022-12-27"))
-                            .routine(routineService.getRouteByName("Walk"))
+                            .routine(routineService.getRandomRoutine())
                             .user(userService.getById(1L))
                             .difficulty(Difficulty.MEDIUM)
                             .build(),
@@ -105,7 +105,7 @@ public class SeedServiceImpl implements SeedService {
                             .descriptionHowItWasSucceeded("i was calm and relax , one with the floe")
                             .startDate(LocalDate.parse("2021-11-01"))
                             .endDate(LocalDate.parse("2021-11-23"))
-                            .routine(routineService.getRouteByName("Meditation"))
+                            .routine(routineService.getRandomRoutine())
                             .user(userService.getById(1L))
                             .difficulty(Difficulty.EASY)
                             .build(),
@@ -114,7 +114,7 @@ public class SeedServiceImpl implements SeedService {
                             .descriptionHowItWasSucceeded("never skip core day")
                             .startDate(LocalDate.parse("2023-01-27"))
                             .endDate(LocalDate.parse("2023-12-27"))
-                            .routine(routineService.getRouteByName("Gym"))
+                            .routine(routineService.getRandomRoutine())
                             .user(userService.getById(1L))
                             .difficulty(Difficulty.HARD)
                             .build()

@@ -4,6 +4,7 @@ import com.example.achievementboard.constants.dtos.achievement.AchievementCreate
 import com.example.achievementboard.constants.dtos.achievement.AchievementView;
 import com.example.achievementboard.constants.enums.Difficulty;
 import com.example.achievementboard.entity.Achievement;
+import com.example.achievementboard.entity.Routine;
 import com.example.achievementboard.entity.User;
 import com.example.achievementboard.repos.AchievementRepository;
 import com.example.achievementboard.service.routine.RoutineService;
@@ -96,6 +97,11 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     public void deleteAch(Long l) {
         repository.deleteById(l);
+    }
+
+    @Override
+    public List<Achievement> getAllAchievementsByRoutine(Routine routine) {
+        return repository.findAllByRoutine(routine);
     }
 
     private void fillAchievement(Achievement entity) {

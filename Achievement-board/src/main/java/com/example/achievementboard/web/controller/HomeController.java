@@ -17,7 +17,7 @@ public class HomeController extends BaseController {
 
     @GetMapping("/logout")
     public ModelAndView logout(HttpSession session){
-        session.removeAttribute("user");
+        session.removeAttribute("userEntity");
         return redirect("/login" , new ModelAndView());
     }
 }

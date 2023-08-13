@@ -1,26 +1,24 @@
 package com.example.achievementboard.service.achievement;
 
-import com.example.achievementboard.constants.dtos.achievement.AchievementCreate;
-import com.example.achievementboard.constants.dtos.achievement.AchievementView;
-import com.example.achievementboard.entity.Routine;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.dtos.achievement.AchievementCreate;
+import com.example.achievementboard.domain.dtos.achievement.AchievementChange;
+import com.example.achievementboard.domain.dtos.achievement.AchievementView;
+import com.example.achievementboard.domain.entity.AchievementEntity;
+import com.example.achievementboard.domain.entity.RoutineEntity;
+import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.service.BaseService;
-import com.example.achievementboard.entity.Achievement;
 
 import java.util.List;
 
-public interface AchievementService extends BaseService<Achievement> {
-    List<Achievement> getAllAchievements(User user);
+public interface AchievementService extends BaseService<AchievementEntity> {
 
-    List<Achievement> getAllAchievementsSortedByTimeTook(User user);
+    List<AchievementView> getAllAchievementsSortedByTimeTook(Long userID);
 
-    List<Achievement> getAllAchievementsSortedByDifficulty(User user);
+    List<AchievementView> getAllAchievementsSortedByDifficulty(Long userID);
 
-    void save(AchievementCreate achievementCreate, User user);
+    void save(AchievementCreate achievementCreate, Long userID);
 
-    void edit(AchievementView achievementView);
+    void edit(AchievementChange achievementChange);
 
     void deleteAch(Long l);
-
-    List<Achievement> getAllAchievementsByRoutine(Routine routine);
 }

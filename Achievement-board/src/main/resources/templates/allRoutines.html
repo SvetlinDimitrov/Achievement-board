@@ -16,19 +16,19 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/goal}">Goals</a>
+            <a class="nav-link text-white" th:href="@{/goalEntity}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-dark active" th:href="@{/routine}">Routines</a>
+            <a class="nav-link text-dark active" th:href="@{/routineEntity}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
         </li>
         <li class="d-inline-block nav-item">
             <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Sort By</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" th:href="@{/routine/sortByDifficulty}">Difficulty</a></li>
-                <li><a class="dropdown-item" th:href="@{/routine/sortByHourSpend}">HourSpend</a></li>
+                <li><a class="dropdown-item" th:href="@{/routineEntity/sortByDifficulty}">Difficulty</a></li>
+                <li><a class="dropdown-item" th:href="@{/routineEntity/sortByHourSpend}">HourSpend</a></li>
             </ul>
         </li>
     </div>
@@ -45,7 +45,7 @@
             <h2 th:text = "'Name: '+${r.name}"></h2>
             <p th:text = "'Hour To Spend: '+${r.hoursToSpend}"></p>
             <p th:text="'Difficulty: ' + ${r.difficulty}"></p>
-            <a th:href="@{/routine/detail/{id}(id=${r.id})}" class="btn btn-primary">More Info</a>
+            <a th:href="@{/routineEntity/detail/{id}(id=${r.id})}" class="btn btn-primary">More Info</a>
         </div>
     </div>
 </div>

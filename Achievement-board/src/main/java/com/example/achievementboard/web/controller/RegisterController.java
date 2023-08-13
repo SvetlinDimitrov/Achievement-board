@@ -1,6 +1,6 @@
 package com.example.achievementboard.web.controller;
 
-import com.example.achievementboard.constants.dtos.RegisterUser;
+import com.example.achievementboard.domain.dtos.user.RegisterUser;
 import com.example.achievementboard.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

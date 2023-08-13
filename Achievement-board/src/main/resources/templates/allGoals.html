@@ -16,20 +16,20 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-dark active " th:href="@{/goal}">Goals</a>
+            <a class="nav-link text-dark active " th:href="@{/goalEntity}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
         </li>
         <li class="d-inline-block nav-item">
             <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Sort By</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" th:href="@{/goal/sortByEndDate}">EndDate</a></li>
-                <li><a class="dropdown-item" th:href="@{/goal/sortByImportance}">Importance</a></li>
-                <li><a class="dropdown-item" th:href="@{/goal/sortByDifficulty}">Difficulty</a></li>
+                <li><a class="dropdown-item" th:href="@{/goalEntity/sortByEndDate}">EndDate</a></li>
+                <li><a class="dropdown-item" th:href="@{/goalEntity/sortByImportance}">Importance</a></li>
+                <li><a class="dropdown-item" th:href="@{/goalEntity/sortByDifficulty}">Difficulty</a></li>
             </ul>
         </li>
     </div>
@@ -52,7 +52,7 @@
                 <p th:text = "'Category: ' + ${g.category}"></p>
                 <p th:text = "'Importance: ' + ${g.importance}"></p>
                 <p th:text = "'Difficulty: ' + ${g.difficulty}"></p>
-                <p><a class="btn btn-secondary" th:href="@{/goal/detail/{id}(id=*{g.id})}">View details »</a></p>
+                <p><a class="btn btn-secondary" th:href="@{/goalEntity/detail/{id}(id=*{g.id})}">View details »</a></p>
             </div>
 
         </div>

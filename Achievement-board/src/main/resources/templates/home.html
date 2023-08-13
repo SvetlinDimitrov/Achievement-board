@@ -16,29 +16,29 @@
             <a class="nav-link text-dark active " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
         </li>
     </div>
     <div class="">
         <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
     </div>
 </ul>
-<h1 th:text="'Hello '+ ${session.user.username} + '. Here you can track your goals, routines and achievements'"
+<h1 th:text="'Hello '+ ${session.userEntity.username} + '. Here you can track your goals, routines and achievements'"
     class="text-center m-5"></h1>
 <div class="container-md p-3 mb-4 rounded-3 w-75 border d-flex">
     <div class="container-md py-5">
         <h1 class="display-5 fw-bold">~Robert F. Kennedy</h1>
         <p class="col-md-8 fs-4 ">“Only those who dare to fail greatly can ever achieve greatly.”</p>
-        <a class="btn btn-outline-light" type="button"  th:href="@{/achievement/create}">Add Achievement</a>
+        <a class="btn btn-outline-light" type="button"  th:href="@{/achievementEntity/create}">Add Achievement</a>
     </div>
     <div class="container-fluid w-25 ">
-        <img src="/pic/achievement-icon-png-22.jpg"
+        <img src="/pic/achievementEntity-icon-png-22.jpg"
              class="rounded img-fluid bg-transparent" alt="...">
     </div>
 
@@ -50,7 +50,7 @@
             <p>“We Are What We Repeatedly Do” </p>
             <p>Our habits define us, and if we want to be successful, we need to develop positive habits and break
                 negative ones.</p>
-            <a class="btn btn-outline-light" th:href="@{/routine/create}" type="button">Add Routine</a>
+            <a class="btn btn-outline-light" th:href="@{/routineEntity/create}" type="button">Add Routine</a>
         </div>
     </div>
     <div class="col-md-6">
@@ -58,7 +58,7 @@
             <h2>~David Goggins</h2>
             <p>"It takes great strength to be vulnerable enough to put your ass on the line, in public, and work toward
                 a dream that feels like it s slipping away."</p>
-            <a class="btn btn-outline-light" th:href="@{/goal/create}" type="button">Add Goal</a>
+            <a class="btn btn-outline-light" th:href="@{/goalEntity/create}" type="button">Add Goal</a>
         </div>
     </div>
 </div>

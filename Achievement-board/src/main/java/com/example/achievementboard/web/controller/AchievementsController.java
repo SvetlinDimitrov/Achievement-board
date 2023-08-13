@@ -1,10 +1,11 @@
 package com.example.achievementboard.web.controller;
 
-import com.example.achievementboard.constants.DataChecker;
-import com.example.achievementboard.constants.dtos.achievement.AchievementCreate;
-import com.example.achievementboard.constants.dtos.achievement.AchievementView;
-import com.example.achievementboard.entity.Achievement;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.constants.DataChecker;
+import com.example.achievementboard.domain.dtos.achievement.AchievementCreate;
+import com.example.achievementboard.domain.dtos.achievement.AchievementChange;
+import com.example.achievementboard.domain.dtos.user.UserView;
+import com.example.achievementboard.domain.entity.AchievementEntity;
+import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.service.achievement.AchievementService;
 import com.example.achievementboard.service.routine.RoutineService;
 import jakarta.servlet.http.HttpSession;
@@ -19,30 +20,31 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/achievement")
 public class AchievementsController extends BaseController {
+
     private final AchievementService achievementService;
-    private final RoutineService routineService;
+
 
     @GetMapping
     public ModelAndView getAchievementPage(HttpSession session, ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allAchievements", achievementService.getAllAchievements(user));
+        modelAndView.addObject("allAchievements", user.getAchievementViews());
         return setView("allAchievements", modelAndView);
     }
 
     @GetMapping("/sortByTimeTook")
     public ModelAndView getAchievementPageSortedByTime(HttpSession session, ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allAchievements", achievementService.getAllAchievementsSortedByTimeTook(user));
+        modelAndView.addObject("allAchievements", achievementService.getAllAchievementsSortedByTimeTook(user.getId()));
         return setView("allAchievements", modelAndView);
     }
 
     @GetMapping("/sortByDifficulty")
     public ModelAndView getAchievementPageSortedByDiff(HttpSession session, ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allAchievements", achievementService.getAllAchievementsSortedByDifficulty(user));
+        modelAndView.addObject("allAchievements", achievementService.getAllAchievementsSortedByDifficulty(user.getId()));
         return setView("allAchievements", modelAndView);
     }
 
@@ -50,9 +52,9 @@ public class AchievementsController extends BaseController {
     public ModelAndView getCretePage(@ModelAttribute("achievementCreate") AchievementCreate achievementCreate,
                                      HttpSession session,
                                      ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allRoutines", routineService.getAllRoutines(user));
+        modelAndView.addObject("allRoutines",user.getRoutineViews());
         return setView("achievementCreate", modelAndView);
     }
 
@@ -61,16 +63,16 @@ public class AchievementsController extends BaseController {
                                           BindingResult result,
                                           HttpSession session,
                                           ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
         DataChecker.check(result, achievementCreate.getStartDate(), achievementCreate.getEndDate(), "achievementCreate", "startDate");
 
         if (result.hasErrors()) {
-            modelAndView.addObject("allRoutines", routineService.getAllRoutines(user));
+            modelAndView.addObject("allRoutines", user.getRoutineViews());
             modelAndView.setViewName("achievementCreate");
             return modelAndView;
         }
 
-        achievementService.save(achievementCreate, user);
+        achievementService.save(achievementCreate, user.getId());
         return redirect("/achievement", modelAndView);
     }
 
@@ -78,29 +80,31 @@ public class AchievementsController extends BaseController {
     public ModelAndView getCretePage(@PathVariable(name = "id") String id,
                                      HttpSession session,
                                      ModelAndView modelAndView) {
-        Achievement achievement = achievementService.getById(Long.parseLong(id));
 
-        User user = getUser(session);
-        modelAndView.addObject("allRoutines", routineService.getAllRoutines(user));
-        modelAndView.addObject("achievementCreate", achievement.toDto());
+        AchievementEntity achievementEntity = achievementService.getById(Long.parseLong(id));
+
+        UserView user = getUser(session);
+
+        modelAndView.addObject("allRoutines", user.getRoutineViews());
+        modelAndView.addObject("achievementCreate", achievementEntity.toDto());
         return setView("achievementDetail", modelAndView);
     }
 
     @PostMapping("/detailEdit")
-    public ModelAndView editAch(@Valid @ModelAttribute("achievementCreate") AchievementView achievementView,
+    public ModelAndView editAch(@Valid @ModelAttribute("achievementCreate") AchievementChange achievementChange,
                                 BindingResult result,
                                 ModelAndView modelAndView,
                                 HttpSession session) {
-        User user = getUser(session);
-        DataChecker.check(result, achievementView.getStartDate(), achievementView.getEndDate(), "achievementCreate", "startDate");
+        UserView user = getUser(session);
+        DataChecker.check(result, achievementChange.getStartDate(), achievementChange.getEndDate(), "achievementCreate", "startDate");
 
         if (result.hasErrors()) {
-            modelAndView.addObject("allRoutines", routineService.getAllRoutines(user));
+            modelAndView.addObject("allRoutines", user.getRoutineViews());
             modelAndView.setViewName("achievementDetail");
             return modelAndView;
         }
 
-        achievementService.edit(achievementView);
+        achievementService.edit(achievementChange);
         return redirect("/achievement", modelAndView);
     }
 

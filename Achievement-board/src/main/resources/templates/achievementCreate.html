@@ -16,13 +16,13 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
         </li>
     </div>
     <div class="">
@@ -33,11 +33,11 @@
         <h1>Add Achievement</h1>
     </div>
     <div class="container text-center">
-        <img src="/pic/achievement-icon-png-22.jpg" class="rounded w-25" alt="...">
+        <img src="/pic/achievementEntity-icon-png-22.jpg" class="rounded w-25" alt="...">
     </div>
     <div class="container w-50 p-5 ">
         <form
-                th:action="@{/achievement/create}"
+                th:action="@{/achievementEntity/create}"
                 th:object="${achievementCreate}"
                 th:method = "post"
         >
@@ -51,7 +51,7 @@
                 </div>
                 <div id="usernameHelper" class="form-text text-white"
                      th:if = "${!#fields.hasErrors('name')}">
-                    Your achievement must be at least 3 chars long !
+                    Your achievementEntity must be at least 3 chars long !
                 </div>
             </div>
             
@@ -69,9 +69,9 @@
                 <select th:field = "${achievementCreate.routineId}"
                         id="route" class="form-select">
                     <option value="0" selected>Select Route</option>
-                    <option th:each = "routine : ${allRoutines}"
-                            th:value="${routine.id}"
-                            th:text = "${routine.name}"></option>
+                    <option th:each = "routineEntity : ${allRoutines}"
+                            th:value="${routineEntity.id}"
+                            th:text = "${routineEntity.name}"></option>
                 </select>
                 <div id="routeHelper" class="form-text text-white">
                     It`s not required !

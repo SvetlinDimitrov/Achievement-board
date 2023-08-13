@@ -16,13 +16,13 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
         </li>
     </div>
     <div class="">
@@ -34,7 +34,7 @@
     </div>
     <div class="container w-50 p-5 ">
         <form
-                th:action="@{/routine/edit}"
+                th:action="@{/routineEntity/edit}"
                 th:object="${viewRoutine}"
                 th:method = "post"
         >
@@ -120,7 +120,7 @@
                         <button type="submit" class="btn btn-primary w-50">Edit</button>
                     </div>
                     <div class="col align-self-end text-end">
-                        <a type="submit" th:href="@{/routine/delete/{id}(id=${viewRoutine.id})}" class="btn btn-primary w-50">Delete</a>
+                        <a type="submit" th:href="@{/routineEntity/delete/{id}(id=${viewRoutine.id})}" class="btn btn-primary w-50">Delete</a>
                     </div>
                     
                 </div>

@@ -1,59 +1,55 @@
 package com.example.achievementboard.web.controller;
 
-import com.example.achievementboard.constants.DataChecker;
-import com.example.achievementboard.constants.dtos.achievement.AchievementView;
-import com.example.achievementboard.constants.dtos.goal.GoalCreate;
-import com.example.achievementboard.constants.dtos.goal.GoalView;
-import com.example.achievementboard.entity.Goal;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.constants.DataChecker;
+import com.example.achievementboard.domain.dtos.goal.GoalChange;
+import com.example.achievementboard.domain.dtos.goal.GoalCreate;
+import com.example.achievementboard.domain.dtos.user.UserView;
+import com.example.achievementboard.domain.entity.GoalEntity;
 import com.example.achievementboard.service.goal.GoalService;
-import com.example.achievementboard.service.routine.RoutineService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @Controller
 @RequestMapping("/goal")
 public class GoalController extends BaseController{
+
     private final GoalService goalService;
-    private final RoutineService routineService;
+
     @GetMapping
     public ModelAndView getGoalPage(HttpSession session , ModelAndView modelAndView){
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allGoals" , goalService.getAllGoals(user));
+        modelAndView.addObject("allGoals" , user.getGoalViews());
         return setView("allGoals" , modelAndView);
     }
 
     @GetMapping("/sortByEndDate")
     public ModelAndView getGoalsSortedByEndDate(HttpSession session , ModelAndView modelAndView){
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allGoals" , goalService.getAllGoalsSortedByDate(user));
+        modelAndView.addObject("allGoals" , user.getGoalViews());
         return setView("allGoals" , modelAndView);
     }
 
     @GetMapping("/sortByImportance")
     public ModelAndView getGoalsSortByImportance(HttpSession session , ModelAndView modelAndView){
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allGoals" , goalService.getAllGoalsSortByImportance(user));
+        modelAndView.addObject("allGoals" , goalService.getAllGoalsSortByImportance(user.getId()));
         return setView("allGoals" , modelAndView);
     }
 
     @GetMapping("/sortByDifficulty")
     public ModelAndView getGoalsSortByDifficulty(HttpSession session , ModelAndView modelAndView){
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allGoals" , goalService.getAllGoalsSortByDifficulty(user));
+        modelAndView.addObject("allGoals" , goalService.getAllGoalsSortByDifficulty(user.getId()));
         return setView("allGoals" , modelAndView);
     }
 
@@ -61,8 +57,8 @@ public class GoalController extends BaseController{
     public ModelAndView getCreateGoalPage(@ModelAttribute(name = "goalCreate")GoalCreate goalCreate,
                                    ModelAndView modelAndView,
                                    HttpSession session){
-        User user = getUser(session);
-        modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user));
+        UserView user = getUser(session);
+        modelAndView.addObject("allRoutines" , user.getRoutineViews());
 
         return setView("goalCreate.html" , modelAndView);
     }
@@ -71,16 +67,16 @@ public class GoalController extends BaseController{
                                    BindingResult result,
                                    ModelAndView modelAndView,
                                    HttpSession session){
-        User user = getUser(session);
+        UserView user = getUser(session);
         DataChecker.check(result ,goalCreate.getStartDate() , goalCreate.getEndDate() ,"goalCreate" , "startDate");
 
         if(result.hasErrors()){
-            modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user));
+            modelAndView.addObject("allRoutines" , user.getRoutineViews());
             modelAndView.setViewName("goalCreate");
             return modelAndView;
         }
 
-        goalService.save(goalCreate , user);
+        goalService.save(goalCreate , user.getId());
 
         return redirect("/goal" , modelAndView);
     }
@@ -88,28 +84,29 @@ public class GoalController extends BaseController{
     public ModelAndView getCreateGoalPage(@PathVariable(name = "id") String id,
                                           ModelAndView modelAndView,
                                           HttpSession session){
-        User user = getUser(session);
-        Goal goal = goalService.getById(Long.parseLong(id));
-        modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user));
-        modelAndView.addObject("currentGoal" , goal.toGoalView());
+        UserView user = getUser(session);
+        GoalEntity goalEntity = goalService.getById(Long.parseLong(id));
+
+        modelAndView.addObject("allRoutines" , user.getRoutineViews());
+        modelAndView.addObject("currentGoal" , goalEntity.toGoalView());
 
         return setView("goalDetail.html" , modelAndView);
     }
     @PostMapping("/edit")
-    public ModelAndView getCreateGoalPage(@Valid @ModelAttribute(name = "currentGoal") GoalView goalView,
+    public ModelAndView getCreateGoalPage(@Valid @ModelAttribute(name = "currentGoal") GoalChange goalChange,
                                           BindingResult result,
                                           ModelAndView modelAndView,
                                           HttpSession session){
-        User user = getUser(session);
-        DataChecker.check(result ,goalView.getBeginDate() , goalView.getEndDate() ,"currentGoal" , "beginDate");
+        UserView user = getUser(session);
+        DataChecker.check(result , goalChange.getBeginDate() , goalChange.getEndDate() ,"currentGoal" , "beginDate");
 
         if(result.hasErrors()){
-            modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user));
+            modelAndView.addObject("allRoutines" , user.getRoutineViews());
             modelAndView.setViewName("goalDetail");
             return modelAndView;
         }
 
-        goalService.edit(goalView);
+        goalService.edit(goalChange);
 
         return redirect("/goal" , modelAndView);
     }

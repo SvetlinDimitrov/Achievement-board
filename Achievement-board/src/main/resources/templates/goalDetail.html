@@ -16,13 +16,13 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
         </li>
     </div>
     <div class="">
@@ -34,7 +34,7 @@
     </div>
     <div class="container w-50 p-5 ">
         <form
-                th:action="@{/goal/edit}"
+                th:action="@{/goalEntity/edit}"
                 th:object="${currentGoal}"
                 th:method = "post"
         >
@@ -119,9 +119,9 @@
                 <select th:field = "${currentGoal.routineId}"
                         id="route" class="form-select">
                     <option value="0" selected>Select Route</option>
-                    <option th:each = "routine : ${allRoutines}"
-                            th:value="${routine.id}"
-                            th:text = "${routine.name}"></option>
+                    <option th:each = "routineEntity : ${allRoutines}"
+                            th:value="${routineEntity.id}"
+                            th:text = "${routineEntity.name}"></option>
                 </select>
                 <div id="routeHelper" class="form-text text-white">
                     It`s not required !
@@ -166,10 +166,10 @@
                         <button type="submit" class="btn btn-primary w-50">Edit</button>
                     </div>
                     <div class="col align-self-center">
-                        <a type="submit" th:href="@{/goal/finish/{id}(id=${currentGoal.id})}" class="btn btn-primary w-50">Finish Goal</a>
+                        <a type="submit" th:href="@{/goalEntity/finish/{id}(id=${currentGoal.id})}" class="btn btn-primary w-50">Finish Goal</a>
                     </div>
                     <div class="col align-self-end text-end">
-                        <a type="submit" th:href="@{/goal/delete/{id}(id=${currentGoal.id})}" class="btn btn-primary w-50">Delete</a>
+                        <a type="submit" th:href="@{/goalEntity/delete/{id}(id=${currentGoal.id})}" class="btn btn-primary w-50">Delete</a>
                     </div>
 
                 </div>

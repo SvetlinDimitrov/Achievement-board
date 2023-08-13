@@ -1,6 +1,7 @@
 package com.example.achievementboard.web.controller;
 
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.dtos.user.UserView;
+import com.example.achievementboard.domain.entity.UserEntity;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,8 +21,8 @@ public class BaseController {
         modelAndView.setViewName("redirect:" + redirect);
         return modelAndView;
     }
-    protected User getUser(HttpSession session){
-        return (User) session.getAttribute("user");
+    protected UserView getUser(HttpSession session){
+        return (UserView) session.getAttribute("user");
     }
 
 }

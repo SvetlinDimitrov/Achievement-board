@@ -1,15 +1,15 @@
 package com.example.achievementboard.service.goal;
 
-import com.example.achievementboard.constants.dtos.goal.GoalCreate;
-import com.example.achievementboard.constants.dtos.goal.GoalView;
-import com.example.achievementboard.constants.enums.Difficulty;
-import com.example.achievementboard.entity.Achievement;
-import com.example.achievementboard.entity.Goal;
-import com.example.achievementboard.entity.Routine;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.constants.enums.Difficulty;
+import com.example.achievementboard.domain.dtos.goal.GoalChange;
+import com.example.achievementboard.domain.dtos.goal.GoalCreate;
+import com.example.achievementboard.domain.dtos.goal.GoalView;
+import com.example.achievementboard.domain.entity.AchievementEntity;
+import com.example.achievementboard.domain.entity.GoalEntity;
 import com.example.achievementboard.repos.GoalRepository;
+import com.example.achievementboard.repos.RoutineRepository;
+import com.example.achievementboard.repos.UserRepository;
 import com.example.achievementboard.service.achievement.AchievementService;
-import com.example.achievementboard.service.routine.RoutineService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 public class GoalServiceImpl implements GoalService {
     private final GoalRepository goalRepository;
-    private final RoutineService routineService;
+    private final RoutineRepository routineRepository;
     private final AchievementService achievementService;
+    private final UserRepository userRepository;
 
     @Override
     public boolean isEmpty() {
@@ -28,49 +29,48 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public void saveAll(List<Goal> build) {
+    public void saveAll(List<GoalEntity> build) {
         build.forEach(GoalServiceImpl::setPicture);
         goalRepository.saveAll(build);
     }
 
     @Override
-    public Goal getById(Long id) {
+    public GoalEntity getById(Long id) {
         return goalRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public void save(Goal entity) {
+    public void save(GoalEntity entity) {
         setPicture(entity);
         goalRepository.save(entity);
     }
 
     @Override
-    public List<Goal> getAllGoals(User user) {
-        return goalRepository.findAllByUser(user);
+    public List<GoalView> getAllGoalsSortedByDate(Long userId) {
+        return goalRepository.findAllByUserEntity_IdOrderByEndDate(userId).stream().map(GoalView::new).toList();
     }
 
     @Override
-    public List<Goal> getAllGoalsSortedByDate(User user) {
-        return goalRepository.findAllByUserOrderByEndDate(user);
+    public List<GoalView> getAllGoalsSortByImportance(Long userId) {
+        return goalRepository.findAllByUserEntity_Id(userId)
+                .stream()
+                .sorted((g1,g2) -> g2.getImportance().compareTo(g1.getImportance()))
+                .map(GoalView::new)
+                .toList();
     }
 
     @Override
-    public List<Goal> getAllGoalsSortByImportance(User user) {
-        List<Goal> allByUser = goalRepository.findAllByUser(user);
-        allByUser.sort((g1,g2) -> g2.getImportance().compareTo(g1.getImportance()));
-        return allByUser;
+    public List<GoalView> getAllGoalsSortByDifficulty(Long userId) {
+        return goalRepository.findAllByUserEntity_Id(userId)
+                .stream()
+                .sorted((g1,g2) -> g2.getDifficulty().compareTo(g1.getDifficulty()))
+                .map(GoalView::new)
+                .toList();
     }
 
     @Override
-    public List<Goal> getAllGoalsSortByDifficulty(User user) {
-        List<Goal> allByUser = goalRepository.findAllByUser(user);
-        allByUser.sort((g1,g2) -> g2.getDifficulty().compareTo(g1.getDifficulty()));
-        return allByUser;
-    }
-
-    @Override
-    public void save(GoalCreate goalCreate, User user) {
-        Goal build = Goal.builder()
+    public void save(GoalCreate goalCreate, Long userId) {
+        GoalEntity build = GoalEntity.builder()
                 .name(goalCreate.getName())
                 .importance(goalCreate.getImportance())
                 .descriptionHowToDoIt(goalCreate.getDescriptionHowItWillBeDone())
@@ -79,24 +79,24 @@ public class GoalServiceImpl implements GoalService {
                 .category(goalCreate.getCategory())
                 .descriptionWhyYouWantToAchieveIt(goalCreate.getBonusDescription())
                 .difficulty(goalCreate.getDifficulty())
-                .user(user)
-                .routine(goalCreate.getRoutineId() == 0 ? null : routineService.getById(goalCreate.getRoutineId()))
+                .userEntity(userRepository.findById(userId).orElseThrow())
+                .routineEntity(goalCreate.getRoutineId() == 0 ? null : routineRepository.findById(goalCreate.getRoutineId()).orElseThrow())
                 .build();
         save(build);
     }
 
     @Override
-    public void edit(GoalView goalView) {
-        Goal edit = getById(goalView.getId());
-        edit.setName(goalView.getName());
-        edit.setImportance(goalView.getImportance());
-        edit.setDescriptionHowToDoIt(goalView.getDescriptionHowToDoIt());
-        edit.setEndDate(goalView.getEndDate());
-        edit.setBeginDate(goalView.getBeginDate());
-        edit.setCategory(goalView.getCategory());
-        edit.setDescriptionWhyYouWantToAchieveIt(goalView.getDescriptionWhyYouWantToAchieveIt());
-        edit.setDifficulty(goalView.getDifficulty());
-        edit.setRoutine(goalView.getRoutineId() == 0 ? null : routineService.getById(goalView.getRoutineId()));
+    public void edit(GoalChange goalChange) {
+        GoalEntity edit = getById(goalChange.getId());
+        edit.setName(goalChange.getName());
+        edit.setImportance(goalChange.getImportance());
+        edit.setDescriptionHowToDoIt(goalChange.getDescriptionHowToDoIt());
+        edit.setEndDate(goalChange.getEndDate());
+        edit.setBeginDate(goalChange.getBeginDate());
+        edit.setCategory(goalChange.getCategory());
+        edit.setDescriptionWhyYouWantToAchieveIt(goalChange.getDescriptionWhyYouWantToAchieveIt());
+        edit.setDifficulty(goalChange.getDifficulty());
+        edit.setRoutineEntity(goalChange.getRoutineId() == 0 ? null : routineRepository.findById(goalChange.getRoutineId()).orElseThrow());
         save(edit);
     }
 
@@ -107,26 +107,21 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     public void finishGoal(Long id) {
-        Goal goal = getById(id);
-        Achievement newAchievement = Achievement.builder()
-                .name(goal.getName())
-                .descriptionHowItWasSucceeded(goal.getDescriptionHowToDoIt())
-                .startDate(goal.getBeginDate())
-                .endDate(goal.getEndDate())
-                .difficulty(goal.getDifficulty())
-                .user(goal.getUser())
-                .routine(goal.getRoutine())
+        GoalEntity goalEntity = getById(id);
+        AchievementEntity newAchievementEntity = AchievementEntity.builder()
+                .name(goalEntity.getName())
+                .descriptionHowItWasSucceeded(goalEntity.getDescriptionHowToDoIt())
+                .startDate(goalEntity.getBeginDate())
+                .endDate(goalEntity.getEndDate())
+                .difficulty(goalEntity.getDifficulty())
+                .userEntity(goalEntity.getUserEntity())
+                .routineEntity(goalEntity.getRoutineEntity())
                 .build();
-        achievementService.save(newAchievement);
+        achievementService.save(newAchievementEntity);
         deleteGoal(id);
     }
 
-    @Override
-    public List<Goal> getAllGoalsByRoutine(Routine routine) {
-        return goalRepository.findAllByRoutine(routine);
-    }
-
-    private static void setPicture(Goal entity) {
+    private static void setPicture(GoalEntity entity) {
         if(entity.getDifficulty().equals(Difficulty.EASY)){
             entity.setPictureRes("/pic/easy.jpg");
         }else if(entity.getDifficulty().equals(Difficulty.MEDIUM)){

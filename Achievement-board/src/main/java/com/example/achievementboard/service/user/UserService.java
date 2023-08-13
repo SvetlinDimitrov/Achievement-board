@@ -1,12 +1,12 @@
 package com.example.achievementboard.service.user;
 
 
-import com.example.achievementboard.constants.dtos.LoginUser;
-import com.example.achievementboard.constants.dtos.RegisterUser;
+import com.example.achievementboard.domain.dtos.user.LoginUser;
+import com.example.achievementboard.domain.dtos.user.RegisterUser;
+import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.service.BaseService;
-import com.example.achievementboard.entity.User;
 
-public interface UserService extends BaseService<User> {
+public interface UserService extends BaseService<UserEntity> {
 
     boolean notUsedEmail(String value);
 
@@ -14,5 +14,5 @@ public interface UserService extends BaseService<User> {
 
     boolean login(LoginUser user);
 
-    User getByEmail(String email);
+    com.example.achievementboard.domain.dtos.user.UserView getByEmail(String email);
 }

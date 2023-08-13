@@ -1,8 +1,8 @@
 package com.example.achievementboard.web.controller;
 
-import com.example.achievementboard.constants.dtos.routine.RoutineCreate;
-import com.example.achievementboard.constants.dtos.routine.RoutineView;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.dtos.routine.RoutineCreate;
+import com.example.achievementboard.domain.dtos.routine.RoutineChange;
+import com.example.achievementboard.domain.dtos.user.UserView;
 import com.example.achievementboard.service.routine.RoutineService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,25 +20,25 @@ public class RoutineController extends BaseController {
 
     @GetMapping
     public ModelAndView getRoutinePage(HttpSession session, ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allRoutines", service.getAllRoutines(user));
+        modelAndView.addObject("allRoutines", user.getRoutineViews());
         return setView("allRoutines", modelAndView);
     }
 
     @GetMapping("/sortByDifficulty")
     public ModelAndView getRoutinePageSortedByDifficulty(HttpSession session, ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allRoutines", service.getAllRoutinesSortedByDifficulty(user));
+        modelAndView.addObject("allRoutines", service.getAllRoutinesSortedByDifficulty(user.getId()));
         return setView("allRoutines", modelAndView);
     }
 
     @GetMapping("/sortByHourSpend")
     public ModelAndView getRoutinePageSortedByHourSpend(HttpSession session, ModelAndView modelAndView) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
-        modelAndView.addObject("allRoutines", service.getAllRoutinesSortByHourSpend(user));
+        modelAndView.addObject("allRoutines", service.getAllRoutinesSortByHourSpend(user.getId()));
         return setView("allRoutines", modelAndView);
     }
 
@@ -53,15 +53,15 @@ public class RoutineController extends BaseController {
                                    BindingResult result,
                                    ModelAndView modelAndView,
                                    HttpSession session) {
-        User user = getUser(session);
+        UserView user = getUser(session);
 
         if (result.hasErrors()) {
             modelAndView.setViewName("routineCreate");
             return modelAndView;
         }
 
-        service.add(createRoutine, user);
-        return redirect("/routine", modelAndView);
+        service.add(createRoutine, user.getId());
+        return redirect("/routineEntity", modelAndView);
     }
 
     @GetMapping("/detail/{id}")
@@ -72,7 +72,7 @@ public class RoutineController extends BaseController {
         return setView("routineDetail", modelAndView);
     }
     @PostMapping("/edit")
-    public ModelAndView editGoal(@Valid @ModelAttribute("viewRoutine") RoutineView viewRoutine,
+    public ModelAndView editGoal(@Valid @ModelAttribute("viewRoutine") RoutineChange viewRoutine,
                                    BindingResult result,
                                    ModelAndView modelAndView) {
 
@@ -82,7 +82,7 @@ public class RoutineController extends BaseController {
         }
 
         service.edit(viewRoutine);
-        return redirect("/routine", modelAndView);
+        return redirect("/routineEntity", modelAndView);
     }
 
     @GetMapping("/delete/{id}")
@@ -90,6 +90,6 @@ public class RoutineController extends BaseController {
                                       ModelAndView modelAndView) {
 
         service.deleteRoutine(Long.parseLong(id));
-        return redirect("/routine", modelAndView);
+        return redirect("/routineEntity", modelAndView);
     }
 }

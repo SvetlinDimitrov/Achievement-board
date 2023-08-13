@@ -1,9 +1,8 @@
 package com.example.achievementboard.service.user;
 
-import com.example.achievementboard.constants.dtos.LoginUser;
-import com.example.achievementboard.constants.dtos.RegisterUser;
-import com.example.achievementboard.entity.Achievement;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.dtos.user.LoginUser;
+import com.example.achievementboard.domain.dtos.user.RegisterUser;
+import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.repos.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,18 +22,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveAll(List<User> build) {
+    public void saveAll(List<UserEntity> build) {
         repository.saveAll(build);
     }
 
     @Override
     @Transactional
-    public User getById(Long id) {
+    public UserEntity getById(Long id) {
         return repository.findById(id).orElseThrow();
     }
 
     @Override
-    public void save(User entity) {
+    public void save(UserEntity entity) {
         repository.save(entity);
     }
 
@@ -50,12 +49,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(LoginUser user) {
-        Optional<User> loggedUser = repository.findByEmail(user.getEmail());
+        Optional<UserEntity> loggedUser = repository.findByEmail(user.getEmail());
         return loggedUser.isPresent() && loggedUser.get().getPassword().equals(user.getPassword());
     }
 
     @Override
-    public User getByEmail(String email) {
-        return repository.findByEmail(email).orElseThrow();
+    public com.example.achievementboard.domain.dtos.user.UserView getByEmail(String email) {
+        return new com.example.achievementboard.domain.dtos.user.UserView(repository.findByEmail(email).orElseThrow());
     }
 }

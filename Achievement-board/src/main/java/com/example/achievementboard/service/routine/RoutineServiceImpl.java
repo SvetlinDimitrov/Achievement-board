@@ -1,12 +1,14 @@
 package com.example.achievementboard.service.routine;
 
-import com.example.achievementboard.constants.dtos.routine.RoutineCreate;
-import com.example.achievementboard.constants.dtos.routine.RoutineView;
-import com.example.achievementboard.entity.Routine;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.dtos.routine.RoutineCreate;
+import com.example.achievementboard.domain.dtos.routine.RoutineChange;
+import com.example.achievementboard.domain.dtos.routine.RoutineView;
+import com.example.achievementboard.domain.entity.RoutineEntity;
+import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.repos.AchievementRepository;
 import com.example.achievementboard.repos.GoalRepository;
 import com.example.achievementboard.repos.RoutineRepository;
+import com.example.achievementboard.repos.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ public class RoutineServiceImpl implements RoutineService {
     private final RoutineRepository routineRepository;
     private final GoalRepository goalRepository;
     private final AchievementRepository achievementRepository;
+    private final UserRepository userRepository;
 
     @Override
     public boolean isEmpty() {
@@ -26,48 +29,50 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
-    public void saveAll(List<Routine> build) {
+    public void saveAll(List<RoutineEntity> build) {
         routineRepository.saveAll(build);
     }
 
     @Override
-    public Routine getById(Long id) {
+    public RoutineEntity getById(Long id) {
         return routineRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public void save(Routine entity) {
+    public void save(RoutineEntity entity) {
         routineRepository.save(entity);
     }
 
     @Override
-    public List<Routine> getAllRoutines(User user) {
-        return routineRepository.findAllByUser(user);
+    public List<RoutineView> getAllRoutines(Long userId) {
+        return routineRepository.findAllByUserEntity_Id(userId).stream().map(RoutineView::new).toList();
     }
 
     @Override
-    public List<Routine> getAllRoutinesSortedByDifficulty(User user) {
-        List<Routine> allByUser = routineRepository.findAllByUser(user);
-        allByUser.sort((g1,g2) -> g2.getDifficulty().compareTo(g1.getDifficulty()));
-        return allByUser;
+    public List<RoutineView> getAllRoutinesSortedByDifficulty(Long userId) {
+        return routineRepository.findAllByUserEntity_Id(userId).stream()
+                .map(RoutineView::new)
+                .sorted((g1, g2) -> g2.getDifficulty().compareTo(g1.getDifficulty()))
+                .toList();
     }
 
     @Override
-    public List<Routine> getAllRoutinesSortByHourSpend(User user) {
-        List<Routine> allByUser = routineRepository.findAllByUser(user);
-        allByUser.sort((g1,g2) -> g2.getHoursToSpend().compareTo(g1.getHoursToSpend()));
-        return allByUser;
+    public List<RoutineView> getAllRoutinesSortByHourSpend(Long userId) {
+        return routineRepository.findAllByUserEntity_Id(userId).stream()
+                .map(RoutineView::new)
+                .sorted((g1, g2) -> g2.getHoursToSpend().compareTo(g1.getHoursToSpend()))
+                .toList();
     }
 
     @Override
-    public void add(RoutineCreate createRoutine, User user) {
-        Routine build = Routine.builder()
+    public void add(RoutineCreate createRoutine, Long userId) {
+        RoutineEntity build = RoutineEntity.builder()
                 .name(createRoutine.getName())
                 .descriptionHowToDoIt(createRoutine.getDescription())
                 .hoursToSpend(createRoutine.getHoursSpend())
                 .difficulty(createRoutine.getDifficulty())
                 .days(createRoutine.getDays())
-                .user(user)
+                .userEntity(userRepository.findById(userId).orElseThrow())
                 .build();
         save(build);
     }
@@ -75,21 +80,24 @@ public class RoutineServiceImpl implements RoutineService {
     @Override
     @Transactional
     public void deleteRoutine(Long id) {
-        Routine routine = getById(id);
 
-        goalRepository.findAllByRoutine(routine)
-                        .forEach(g->g.setRoutine(null));
+        goalRepository.findAll()
+                .stream()
+                .filter(g -> g.getRoutineEntity().getId().equals(id))
+                .forEach(g -> g.setRoutineEntity(null));
 
-        achievementRepository.findAllByRoutine(routine)
-                .forEach(a->a.setRoutine(null));
+        achievementRepository.findAll()
+                .stream()
+                .filter(a -> a.getRoutineEntity().getId().equals(id))
+                .forEach(a -> a.setRoutineEntity(null));
 
         routineRepository.deleteById(id);
 
     }
 
     @Override
-    public void edit(RoutineView editedView) {
-        Routine edit = getById(editedView.getId());
+    public void edit(RoutineChange editedView) {
+        RoutineEntity edit = getById(editedView.getId());
 
         edit.setName(editedView.getName());
         edit.setDescriptionHowToDoIt(editedView.getDescription());
@@ -101,7 +109,7 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
-    public Routine getRandomRoutine() {
+    public RoutineEntity getRandomRoutine() {
         return routineRepository.getRandomRoutine();
     }
 

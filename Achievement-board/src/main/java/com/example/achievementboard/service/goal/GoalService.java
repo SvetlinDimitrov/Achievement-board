@@ -1,30 +1,29 @@
 package com.example.achievementboard.service.goal;
 
-import com.example.achievementboard.constants.dtos.goal.GoalCreate;
-import com.example.achievementboard.constants.dtos.goal.GoalView;
-import com.example.achievementboard.entity.Routine;
-import com.example.achievementboard.entity.User;
+import com.example.achievementboard.domain.dtos.goal.GoalCreate;
+import com.example.achievementboard.domain.dtos.goal.GoalChange;
+import com.example.achievementboard.domain.dtos.goal.GoalView;
+import com.example.achievementboard.domain.entity.GoalEntity;
+import com.example.achievementboard.domain.entity.RoutineEntity;
+import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.service.BaseService;
-import com.example.achievementboard.entity.Goal;
 
 import java.util.List;
 
-public interface GoalService extends BaseService<Goal> {
-    List<Goal> getAllGoals(User user);
+public interface GoalService extends BaseService<GoalEntity> {
 
-    List<Goal> getAllGoalsSortedByDate(User user);
+    List<GoalView> getAllGoalsSortedByDate(Long userId);
 
-    List<Goal> getAllGoalsSortByImportance(User user);
+    List<GoalView> getAllGoalsSortByImportance(Long userId);
 
-    List<Goal> getAllGoalsSortByDifficulty(User user);
+    List<GoalView> getAllGoalsSortByDifficulty(Long userId);
 
-    void save(GoalCreate goalCreate, User user);
+    void save(GoalCreate goalCreate, Long userId);
 
-    void edit(GoalView goalView);
+    void edit(GoalChange goalChange);
 
     void deleteGoal(Long l);
 
     void finishGoal(Long l);
 
-    List<Goal> getAllGoalsByRoutine(Routine routine);
 }

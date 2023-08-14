@@ -3,6 +3,9 @@ package com.example.achievementboard.service.seed;
 import com.example.achievementboard.domain.constants.enums.DaysOfTheWeek;
 import com.example.achievementboard.domain.constants.enums.Difficulty;
 import com.example.achievementboard.domain.constants.enums.Importance;
+import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
+import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
 import com.example.achievementboard.domain.entity.AchievementEntity;
 import com.example.achievementboard.domain.entity.GoalEntity;
 import com.example.achievementboard.domain.entity.RoutineEntity;
@@ -45,7 +48,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedGoals() {
+    public void seedGoals() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
         if (goalService.isEmpty()) {
             goalService.saveAll(List.of(
                     GoalEntity.builder()
@@ -90,7 +93,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedAchievement() {
+    public void seedAchievement() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
         if (achievementService.isEmpty()) {
             achievementService.saveAll(List.of(
                     AchievementEntity.builder()
@@ -127,7 +130,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedRoutine() {
+    public void seedRoutine() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
         if (routineService.isEmpty()) {
             routineService.saveAll(List.of(
                     RoutineEntity.builder()
@@ -160,7 +163,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedAll() {
+    public void seedAll() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
         seedUser();
         seedRoutine();
         seedGoals();

@@ -1,5 +1,8 @@
 package com.example.achievementboard.web.controller;
 
+import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
+import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
 import com.example.achievementboard.domain.dtos.routine.RoutineCreate;
 import com.example.achievementboard.domain.dtos.routine.RoutineChange;
 import com.example.achievementboard.domain.dtos.user.UserView;
@@ -52,7 +55,7 @@ public class RoutineController extends BaseController {
     public ModelAndView createGoal(@Valid @ModelAttribute("createRoutine") RoutineCreate createRoutine,
                                    BindingResult result,
                                    ModelAndView modelAndView,
-                                   HttpSession session) {
+                                   HttpSession session) throws UserNotFoundException {
         UserView user = getUser(session);
 
         if (result.hasErrors()) {
@@ -66,7 +69,7 @@ public class RoutineController extends BaseController {
 
     @GetMapping("/detail/{id}")
     public ModelAndView getDetailPage(@PathVariable(name = "id") String id,
-                                      ModelAndView modelAndView) {
+                                      ModelAndView modelAndView) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
 
         modelAndView.addObject("viewRoutine", service.getById(Long.parseLong(id)).toRoutineView());
         return setView("routineDetail", modelAndView);
@@ -74,7 +77,7 @@ public class RoutineController extends BaseController {
     @PostMapping("/edit")
     public ModelAndView editGoal(@Valid @ModelAttribute("viewRoutine") RoutineChange viewRoutine,
                                    BindingResult result,
-                                   ModelAndView modelAndView) {
+                                   ModelAndView modelAndView) throws RoutineNotFoundException {
 
         if (result.hasErrors()) {
             modelAndView.setViewName("routineDetail");

@@ -1,4 +1,4 @@
-package com.example.achievementboard.domain.constants.exeptions.samePasswords;
+package com.example.achievementboard.domain.constants.exception.samePasswords;
 
 import com.example.achievementboard.domain.dtos.user.LoginUser;
 import jakarta.validation.ConstraintValidator;

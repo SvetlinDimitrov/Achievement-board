@@ -1,6 +1,6 @@
 package com.example.achievementboard.domain.dtos.user;
 
-import com.example.achievementboard.domain.constants.exeptions.samePasswords.SamePasswordConstraint;
+import com.example.achievementboard.domain.constants.exception.samePasswords.SamePasswordConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,8 @@
 package com.example.achievementboard.domain.dtos.user;
 
 
-import com.example.achievementboard.domain.constants.exeptions.dataChecker.AtLeast18YearsOldConstrain;
-import com.example.achievementboard.domain.constants.exeptions.emailChecker.NotUsedEmailConstraint;
+import com.example.achievementboard.domain.constants.exception.dataChecker.AtLeast18YearsOldConstrain;
+import com.example.achievementboard.domain.constants.exception.emailChecker.NotUsedEmailConstraint;
 import com.example.achievementboard.domain.entity.UserEntity;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,9 @@
 package com.example.achievementboard.web.controller;
 
 import com.example.achievementboard.domain.constants.DataChecker;
+import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
+import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
 import com.example.achievementboard.domain.dtos.achievement.AchievementCreate;
 import com.example.achievementboard.domain.dtos.achievement.AchievementChange;
 import com.example.achievementboard.domain.dtos.user.UserView;
@@ -80,7 +83,7 @@ public class AchievementsController extends BaseController {
     @GetMapping("/detail/{id}")
     public ModelAndView getCretePage(@PathVariable(name = "id") String id,
                                      HttpSession session,
-                                     ModelAndView modelAndView) {
+                                     ModelAndView modelAndView) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
 
         AchievementEntity achievementEntity = achievementService.getById(Long.parseLong(id));
 

@@ -1,5 +1,7 @@
 package com.example.achievementboard.service.routine;
 
+import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
 import com.example.achievementboard.domain.dtos.routine.RoutineCreate;
 import com.example.achievementboard.domain.dtos.routine.RoutineChange;
 import com.example.achievementboard.domain.dtos.routine.RoutineView;
@@ -34,8 +36,8 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
-    public RoutineEntity getById(Long id) {
-        return routineRepository.findById(id).orElseThrow();
+    public RoutineEntity getById(Long id) throws RoutineNotFoundException {
+        return routineRepository.findById(id).orElseThrow(() -> new RoutineNotFoundException(id));
     }
 
     @Override
@@ -68,14 +70,14 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
-    public void add(RoutineCreate createRoutine, Long userId) {
+    public void add(RoutineCreate createRoutine, Long userId) throws UserNotFoundException {
         RoutineEntity build = RoutineEntity.builder()
                 .name(createRoutine.getName())
                 .descriptionHowToDoIt(createRoutine.getDescription())
                 .hoursToSpend(createRoutine.getHoursSpend())
                 .difficulty(createRoutine.getDifficulty())
                 .days(createRoutine.getDays())
-                .userEntity(userRepository.findById(userId).orElseThrow())
+                .userEntity(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId)))
                 .build();
         save(build);
     }
@@ -99,7 +101,7 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
-    public void edit(RoutineChange editedView) {
+    public void edit(RoutineChange editedView) throws RoutineNotFoundException {
         RoutineEntity edit = getById(editedView.getId());
 
         edit.setName(editedView.getName());

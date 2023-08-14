@@ -1,6 +1,9 @@
 package com.example.achievementboard.service.goal;
 
 import com.example.achievementboard.domain.constants.enums.Difficulty;
+import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
+import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
 import com.example.achievementboard.domain.dtos.goal.GoalChange;
 import com.example.achievementboard.domain.dtos.goal.GoalCreate;
 import com.example.achievementboard.domain.dtos.goal.GoalView;
@@ -37,8 +40,8 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     @Transactional
-    public GoalEntity getById(Long id) {
-        return goalRepository.findById(id).orElseThrow();
+    public GoalEntity getById(Long id) throws GoalNotFoundException {
+        return goalRepository.findById(id).orElseThrow(() -> new GoalNotFoundException(id));
     }
 
     @Override
@@ -74,7 +77,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public void save(GoalCreate goalCreate, Long userId) {
+    public void save(GoalCreate goalCreate, Long userId) throws UserNotFoundException {
         GoalEntity build = GoalEntity.builder()
                 .name(goalCreate.getName())
                 .importance(goalCreate.getImportance())
@@ -84,7 +87,7 @@ public class GoalServiceImpl implements GoalService {
                 .category(goalCreate.getCategory())
                 .descriptionWhyYouWantToAchieveIt(goalCreate.getBonusDescription())
                 .difficulty(goalCreate.getDifficulty())
-                .userEntity(userRepository.findById(userId).orElseThrow())
+                .userEntity(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId)))
                 .routineEntity(goalCreate.getRoutineId() == 0 ? null : routineRepository.findById(goalCreate.getRoutineId()).orElseThrow())
                 .build();
         save(build);
@@ -92,7 +95,7 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     @Transactional
-    public void edit(GoalChange goalChange) {
+    public void edit(GoalChange goalChange) throws GoalNotFoundException, RoutineNotFoundException {
         GoalEntity edit = getById(goalChange.getId());
         edit.setName(goalChange.getName());
         edit.setImportance(goalChange.getImportance());
@@ -102,7 +105,7 @@ public class GoalServiceImpl implements GoalService {
         edit.setCategory(goalChange.getCategory());
         edit.setDescriptionWhyYouWantToAchieveIt(goalChange.getDescriptionWhyYouWantToAchieveIt());
         edit.setDifficulty(goalChange.getDifficulty());
-        edit.setRoutineEntity(goalChange.getRoutineId() == 0 ? null : routineRepository.findById(goalChange.getRoutineId()).orElseThrow());
+        edit.setRoutineEntity(goalChange.getRoutineId() == 0 ? null : routineRepository.findById(goalChange.getRoutineId()).orElseThrow(() -> new RoutineNotFoundException(goalChange.getRoutineId())));
         save(edit);
     }
 
@@ -113,7 +116,7 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     @Transactional
-    public void finishGoal(Long id) {
+    public void finishGoal(Long id) throws GoalNotFoundException {
         GoalEntity goalEntity = getById(id);
         AchievementEntity newAchievementEntity = AchievementEntity.builder()
                 .name(goalEntity.getName())

@@ -1,4 +1,4 @@
-package com.example.achievementboard.domain.constants.exeptions.emailChecker;
+package com.example.achievementboard.domain.constants.exception.emailChecker;
 
 import com.example.achievementboard.service.user.UserService;
 import jakarta.validation.ConstraintValidator;

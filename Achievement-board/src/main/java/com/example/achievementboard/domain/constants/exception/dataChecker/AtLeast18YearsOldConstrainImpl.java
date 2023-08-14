@@ -1,4 +1,4 @@
-package com.example.achievementboard.domain.constants.exeptions.dataChecker;
+package com.example.achievementboard.domain.constants.exception.dataChecker;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

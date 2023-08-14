@@ -1,10 +1,12 @@
 package com.example.achievementboard.service.user;
 
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
 import com.example.achievementboard.domain.dtos.user.RegisterUser;
 import com.example.achievementboard.domain.dtos.user.UserView;
 import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.repos.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserEntity getById(Long id) {
-        return repository.findById(id).orElseThrow();
+    public UserEntity getById(Long id) throws UserNotFoundException {
+        return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @Override
@@ -54,6 +56,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserView getByEmail(String email) {
-        return new UserView(repository.findByEmail(email).orElseThrow());
+        return new UserView(repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email)));
     }
 }

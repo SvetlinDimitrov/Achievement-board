@@ -1,5 +1,8 @@
 package com.example.achievementboard.service.achievement;
 
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
+import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
 import com.example.achievementboard.domain.dtos.achievement.AchievementCreate;
 import com.example.achievementboard.domain.dtos.achievement.AchievementChange;
 import com.example.achievementboard.domain.constants.enums.Difficulty;
@@ -37,8 +40,8 @@ public class AchievementServiceImpl implements AchievementService {
 
     @Override
     @Transactional
-    public AchievementEntity getById(Long id) {
-        return achievementRepository.findById(id).orElseThrow();
+    public AchievementEntity getById(Long id) throws AchievementNotFoundException {
+        return achievementRepository.findById(id).orElseThrow(() -> new AchievementNotFoundException(id));
     }
 
     @Override
@@ -66,18 +69,18 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public void save(AchievementCreate achievementCreate, Long userId) {
+    public void save(AchievementCreate achievementCreate, Long userId) throws RoutineNotFoundException, UserNotFoundException {
         AchievementEntity achievementEntity = AchievementEntity.builder()
                 .name(achievementCreate.getName())
                 .descriptionHowItWasSucceeded(achievementCreate.getDescriptionHowItWasSucceeded())
                 .startDate(achievementCreate.getStartDate())
                 .endDate(achievementCreate.getEndDate())
                 .difficulty(achievementCreate.getDifficulty())
-                .userEntity(userRepository.findById(userId).orElseThrow())
+                .userEntity(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId)))
                 .build();
 
         if (achievementCreate.getRoutineId() != 0) {
-            achievementEntity.setRoutineEntity(routineRepository.findById(achievementCreate.getRoutineId()).orElseThrow());
+            achievementEntity.setRoutineEntity(routineRepository.findById(achievementCreate.getRoutineId()).orElseThrow(() -> new RoutineNotFoundException(achievementCreate.getRoutineId())));
         }
 
         save(achievementEntity);
@@ -85,7 +88,7 @@ public class AchievementServiceImpl implements AchievementService {
 
     @Override
     @Transactional
-    public void edit(AchievementChange achievementChange) {
+    public void edit(AchievementChange achievementChange) throws AchievementNotFoundException, RoutineNotFoundException {
         AchievementEntity achievementEntityToEdit = getById(achievementChange.getId());
         achievementEntityToEdit.setName(achievementChange.getName());
         achievementEntityToEdit.setDescriptionHowItWasSucceeded(achievementChange.getDescriptionHowItWasSucceeded());
@@ -94,7 +97,7 @@ public class AchievementServiceImpl implements AchievementService {
         achievementEntityToEdit.setDifficulty(achievementChange.getDifficulty());
 
         achievementEntityToEdit.setRoutineEntity(achievementChange.getRoutineId() == 0 ?
-                null : routineRepository.findById(achievementChange.getRoutineId()).orElseThrow());
+                null : routineRepository.findById(achievementChange.getRoutineId()).orElseThrow(() -> new RoutineNotFoundException(achievementChange.getRoutineId())));
 
         save(achievementEntityToEdit);
     }

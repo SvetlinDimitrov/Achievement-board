@@ -1,5 +1,6 @@
 package com.example.achievementboard.web.controller;
 
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
 import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
 import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
 import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
@@ -62,6 +63,17 @@ public class BaseController {
         ModelAndView modelAndView = new ModelAndView();
         response.setStatus(500);
         modelAndView.setViewName("RoutineNotFound");
+        return modelAndView;
+
+    }
+
+    @ExceptionHandler(AchievementNotFoundException.class)
+    public ModelAndView catchUserNotFound(HttpServletResponse response ,
+                                          AchievementNotFoundException exception){
+
+        ModelAndView modelAndView = new ModelAndView();
+        response.setStatus(500);
+        modelAndView.setViewName("AchievementNotFound");
         return modelAndView;
 
     }

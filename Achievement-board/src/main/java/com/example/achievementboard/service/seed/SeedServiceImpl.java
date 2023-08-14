@@ -3,6 +3,7 @@ package com.example.achievementboard.service.seed;
 import com.example.achievementboard.domain.constants.enums.DaysOfTheWeek;
 import com.example.achievementboard.domain.constants.enums.Difficulty;
 import com.example.achievementboard.domain.constants.enums.Importance;
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
 import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
 import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
 import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
@@ -48,7 +49,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedGoals() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
+    public void seedGoals() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException, AchievementNotFoundException {
         if (goalService.isEmpty()) {
             goalService.saveAll(List.of(
                     GoalEntity.builder()
@@ -93,7 +94,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedAchievement() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
+    public void seedAchievement() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException, AchievementNotFoundException {
         if (achievementService.isEmpty()) {
             achievementService.saveAll(List.of(
                     AchievementEntity.builder()
@@ -130,7 +131,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedRoutine() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
+    public void seedRoutine() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException, AchievementNotFoundException {
         if (routineService.isEmpty()) {
             routineService.saveAll(List.of(
                     RoutineEntity.builder()
@@ -163,7 +164,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedAll() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
+    public void seedAll() throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException, AchievementNotFoundException {
         seedUser();
         seedRoutine();
         seedGoals();

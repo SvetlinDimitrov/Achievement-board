@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class GoalServiceImpl implements GoalService {
+
     private final GoalRepository goalRepository;
     private final RoutineRepository routineRepository;
     private final AchievementService achievementService;
@@ -53,7 +54,10 @@ public class GoalServiceImpl implements GoalService {
     @Override
     @Transactional
     public List<GoalView> getAllGoalsSortedByDate(Long userId) {
-        return goalRepository.findAllByUserEntity_IdOrderByEndDate(userId).stream().map(GoalView::new).toList();
+        return goalRepository.findAllByUserEntity_IdOrderByEndDate(userId)
+                .stream()
+                .map(GoalView::new)
+                .toList();
     }
 
     @Override
@@ -77,7 +81,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public void save(GoalCreate goalCreate, Long userId) throws UserNotFoundException {
+    public void save(GoalCreate goalCreate, Long userId) throws UserNotFoundException, RoutineNotFoundException {
         GoalEntity build = GoalEntity.builder()
                 .name(goalCreate.getName())
                 .importance(goalCreate.getImportance())
@@ -88,7 +92,7 @@ public class GoalServiceImpl implements GoalService {
                 .descriptionWhyYouWantToAchieveIt(goalCreate.getBonusDescription())
                 .difficulty(goalCreate.getDifficulty())
                 .userEntity(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId)))
-                .routineEntity(goalCreate.getRoutineId() == 0 ? null : routineRepository.findById(goalCreate.getRoutineId()).orElseThrow())
+                .routineEntity(goalCreate.getRoutineId() == 0 ? null : routineRepository.findById(goalCreate.getRoutineId()).orElseThrow(() ->new RoutineNotFoundException(goalCreate.getRoutineId())))
                 .build();
         save(build);
     }

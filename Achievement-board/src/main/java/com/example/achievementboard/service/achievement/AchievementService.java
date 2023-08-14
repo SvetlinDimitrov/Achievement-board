@@ -1,5 +1,8 @@
 package com.example.achievementboard.service.achievement;
 
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
+import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
+import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
 import com.example.achievementboard.domain.dtos.achievement.AchievementCreate;
 import com.example.achievementboard.domain.dtos.achievement.AchievementChange;
 import com.example.achievementboard.domain.dtos.achievement.AchievementView;
@@ -16,9 +19,9 @@ public interface AchievementService extends BaseService<AchievementEntity> {
 
     List<AchievementView> getAllAchievementsSortedByDifficulty(Long userID);
 
-    void save(AchievementCreate achievementCreate, Long userID);
+    void save(AchievementCreate achievementCreate, Long userID) throws RoutineNotFoundException, UserNotFoundException;
 
-    void edit(AchievementChange achievementChange);
+    void edit(AchievementChange achievementChange) throws AchievementNotFoundException, RoutineNotFoundException;
 
     void deleteAch(Long l);
 

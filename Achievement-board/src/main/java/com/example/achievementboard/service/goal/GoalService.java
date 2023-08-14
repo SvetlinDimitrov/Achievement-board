@@ -19,7 +19,7 @@ public interface GoalService extends BaseService<GoalEntity> {
 
     List<GoalView> getAllGoalsSortByDifficulty(Long userId);
 
-    void save(GoalCreate goalCreate, Long userId) throws UserNotFoundException;
+    void save(GoalCreate goalCreate, Long userId) throws UserNotFoundException, RoutineNotFoundException;
 
     void edit(GoalChange goalChange) throws GoalNotFoundException, RoutineNotFoundException;
 

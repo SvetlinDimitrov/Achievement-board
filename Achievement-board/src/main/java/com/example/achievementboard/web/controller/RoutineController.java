@@ -1,5 +1,6 @@
 package com.example.achievementboard.web.controller;
 
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
 import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
 import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
 import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
@@ -69,7 +70,7 @@ public class RoutineController extends BaseController {
 
     @GetMapping("/detail/{id}")
     public ModelAndView getDetailPage(@PathVariable(name = "id") String id,
-                                      ModelAndView modelAndView) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
+                                      ModelAndView modelAndView) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException, AchievementNotFoundException {
 
         modelAndView.addObject("viewRoutine", service.getById(Long.parseLong(id)).toRoutineView());
         return setView("routineDetail", modelAndView);

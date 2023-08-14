@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -37,5 +38,18 @@ public class AchievementView {
         this.routineId = achievement.getRoutineEntity() == null ? null : achievement.getRoutineEntity().getId();
         this.dayTook = achievement.getDayTook();
         this.pictureRes = achievement.getPictureRes();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AchievementView that = (AchievementView) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(descriptionHowItWasSucceeded, that.descriptionHowItWasSucceeded) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && difficulty == that.difficulty && Objects.equals(userId, that.userId) && Objects.equals(routineId, that.routineId) && Objects.equals(dayTook, that.dayTook) && Objects.equals(pictureRes, that.pictureRes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, descriptionHowItWasSucceeded, startDate, endDate, difficulty, userId, routineId, dayTook, pictureRes);
     }
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -33,5 +34,18 @@ public class RoutineView {
         this.difficulty = routineEntity.getDifficulty();
         this.days = routineEntity.getDays();
         this.userId = routineEntity.getUserEntity().getId();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoutineView that = (RoutineView) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(descriptionHowToDoIt, that.descriptionHowToDoIt) && Objects.equals(hoursToSpend, that.hoursToSpend) && difficulty == that.difficulty && Objects.equals(days, that.days) && Objects.equals(userId, that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, descriptionHowToDoIt, hoursToSpend, difficulty, days, userId);
     }
 }

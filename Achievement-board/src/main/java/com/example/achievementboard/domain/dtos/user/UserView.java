@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 
 @Getter
@@ -28,5 +29,19 @@ public class UserView extends User{
         this.age = userEntity.getAge();
         this.birthDate = userEntity.getBirthDate();
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        UserView userView = (UserView) o;
+        return Objects.equals(id, userView.id) && Objects.equals(username, userView.username) && Objects.equals(email, userView.email) && Objects.equals(age, userView.age) && Objects.equals(birthDate, userView.birthDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, username, email, age, birthDate);
     }
 }

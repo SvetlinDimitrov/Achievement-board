@@ -1,6 +1,7 @@
 package com.example.achievementboard.web.controller;
 
 import com.example.achievementboard.domain.constants.DataChecker;
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
 import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
 import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
 import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
@@ -66,7 +67,7 @@ public class AchievementsController extends BaseController {
     public ModelAndView createAchievement(@Valid @ModelAttribute("achievementCreate") AchievementCreate achievementCreate,
                                           BindingResult result,
                                           HttpSession session,
-                                          ModelAndView modelAndView) {
+                                          ModelAndView modelAndView) throws UserNotFoundException, RoutineNotFoundException {
         UserView user = getUser(session);
         DataChecker.check(result, achievementCreate.getStartDate(), achievementCreate.getEndDate(), "achievementCreate", "startDate");
 
@@ -83,7 +84,7 @@ public class AchievementsController extends BaseController {
     @GetMapping("/detail/{id}")
     public ModelAndView getCretePage(@PathVariable(name = "id") String id,
                                      HttpSession session,
-                                     ModelAndView modelAndView) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
+                                     ModelAndView modelAndView) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException, AchievementNotFoundException {
 
         AchievementEntity achievementEntity = achievementService.getById(Long.parseLong(id));
 
@@ -98,7 +99,7 @@ public class AchievementsController extends BaseController {
     public ModelAndView editAch(@Valid @ModelAttribute("achievementCreate") AchievementChange achievementChange,
                                 BindingResult result,
                                 ModelAndView modelAndView,
-                                HttpSession session) {
+                                HttpSession session) throws AchievementNotFoundException, RoutineNotFoundException {
         UserView user = getUser(session);
         DataChecker.check(result, achievementChange.getStartDate(), achievementChange.getEndDate(), "achievementCreate", "startDate");
 

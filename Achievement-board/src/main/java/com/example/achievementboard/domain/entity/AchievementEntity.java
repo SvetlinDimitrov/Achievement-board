@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -54,5 +55,18 @@ public class AchievementEntity extends BaseEntity {
                 .id(getId())
                 .build();
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AchievementEntity that = (AchievementEntity) o;
+        return Objects.equals(name, that.name) && Objects.equals(descriptionHowItWasSucceeded, that.descriptionHowItWasSucceeded) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && difficulty == that.difficulty && Objects.equals(userEntity, that.userEntity) && Objects.equals(routineEntity, that.routineEntity) && Objects.equals(dayTook, that.dayTook) && Objects.equals(pictureRes, that.pictureRes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, descriptionHowItWasSucceeded, startDate, endDate, difficulty, userEntity, routineEntity, dayTook, pictureRes);
     }
 }

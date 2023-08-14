@@ -1,6 +1,7 @@
 package com.example.achievementboard.web.controller;
 
 import com.example.achievementboard.domain.constants.DataChecker;
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
 import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
 import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
 import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
@@ -71,7 +72,7 @@ public class GoalController extends BaseController{
     public ModelAndView createGoal(@Valid @ModelAttribute(name = "goalCreate")GoalCreate goalCreate,
                                    BindingResult result,
                                    ModelAndView modelAndView,
-                                   HttpSession session) throws UserNotFoundException {
+                                   HttpSession session) throws UserNotFoundException, RoutineNotFoundException {
         UserView user = getUser(session);
         DataChecker.check(result ,goalCreate.getStartDate() , goalCreate.getEndDate() ,"goalCreate" , "startDate");
 
@@ -88,7 +89,7 @@ public class GoalController extends BaseController{
     @GetMapping("/detail/{id}")
     public ModelAndView getCreateGoalPage(@PathVariable(name = "id") String id,
                                           ModelAndView modelAndView,
-                                          HttpSession session) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException {
+                                          HttpSession session) throws UserNotFoundException, RoutineNotFoundException, GoalNotFoundException, AchievementNotFoundException {
         UserView user = getUser(session);
         GoalEntity goalEntity = goalService.getById(Long.parseLong(id));
 

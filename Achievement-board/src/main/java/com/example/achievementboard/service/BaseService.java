@@ -1,5 +1,6 @@
 package com.example.achievementboard.service;
 
+import com.example.achievementboard.domain.constants.exception.AchievementNotFoundException;
 import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
 import com.example.achievementboard.domain.constants.exception.GoalNotFoundException;
 import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
@@ -11,7 +12,7 @@ public interface BaseService<T> {
 
     void saveAll(List<T> build);
 
-    T getById(Long id) throws RoutineNotFoundException, GoalNotFoundException, UserNotFoundException;
+    T getById(Long id) throws RoutineNotFoundException, GoalNotFoundException, UserNotFoundException, AchievementNotFoundException;
 
     void save(T entity);
 }

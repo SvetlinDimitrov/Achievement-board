@@ -21,4 +21,6 @@ public interface AchievementService extends BaseService<AchievementEntity> {
     void edit(AchievementChange achievementChange);
 
     void deleteAch(Long l);
+
+    List<AchievementView> getAllAchievementsView(Long id);
 }

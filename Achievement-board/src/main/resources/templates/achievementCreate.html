@@ -16,13 +16,13 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
         </li>
     </div>
     <div class="">
@@ -37,7 +37,7 @@
     </div>
     <div class="container w-50 p-5 ">
         <form
-                th:action="@{/achievementEntity/create}"
+                th:action="@{/achievement/create}"
                 th:object="${achievementCreate}"
                 th:method = "post"
         >
@@ -83,7 +83,7 @@
                     <select th:field="${achievementCreate.difficulty}"
                             id="diff" class="form-select">
                         <option value="" selected>Select difficulty</option>
-                        <option th:each = "diff : ${T(com.example.achievementboard.constants.enums.Difficulty).values()}"
+                        <option th:each = "diff : ${T(com.example.achievementboard.domain.constants.enums.Difficulty).values()}"
                                 th:text="${diff}" th:value="${diff}">Select level</option>
                     </select>
                 <div class="alert alert-danger " role="alert"

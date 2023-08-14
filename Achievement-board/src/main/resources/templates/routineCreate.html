@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -16,13 +16,13 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
         </li>
     </div>
     <div class="">
@@ -37,7 +37,7 @@
     </div>
     <div class="container w-50 p-5 ">
         <form
-                th:action="@{/routineEntity/create}"
+                th:action="@{/routine/create}"
                 th:object="${createRoutine}"
                 th:method = "post"
         >
@@ -65,7 +65,7 @@
                 <select th:field="${createRoutine.difficulty}"
                         id="diff" class="form-select">
                     <option value="" selected>Select difficulty</option>
-                    <option th:each = "diff : ${T(com.example.achievementboard.constants.enums.Difficulty).values()}"
+                    <option th:each = "diff : ${T(com.example.achievementboard.domain.constants.enums.Difficulty).values()}"
                             th:text="${diff}" th:value="${diff}">Select level</option>
                 </select>
                 <div class="alert alert-danger " role="alert"
@@ -97,7 +97,7 @@
                 <label for="days" class="form-label">Days</label>
                 <input  id = "days" th:field="*{days}"
                         name="days"
-                        th:each="day : ${T(com.example.achievementboard.constants.enums.DaysOfTheWeek).values()}"
+                        th:each="day : ${T(com.example.achievementboard.domain.constants.enums.DaysOfTheWeek).values()}"
                         class="m-3" type="checkbox"
                         th:value="${day}"
                         th:text="${day}">

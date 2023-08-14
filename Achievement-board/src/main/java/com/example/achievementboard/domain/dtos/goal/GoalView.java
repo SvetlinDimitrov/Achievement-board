@@ -40,8 +40,8 @@ public class GoalView {
         this.descriptionWhyYouWantToAchieveIt = goalEntity.getDescriptionWhyYouWantToAchieveIt();
         this.difficulty = goalEntity.getDifficulty();
         this.userId = goalEntity.getUserEntity().getId();
-        this.routineId = goalEntity.getRoutineEntity().getId();
-        this.pictureRes = getPictureRes();
+        this.routineId = goalEntity.getRoutineEntity() == null ? null : goalEntity.getRoutineEntity().getId();
+        this.pictureRes = goalEntity.getPictureRes();
 
     }
 }

@@ -12,6 +12,7 @@ import com.example.achievementboard.service.goal.GoalService;
 import com.example.achievementboard.service.routine.RoutineService;
 import com.example.achievementboard.service.user.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class SeedServiceImpl implements SeedService {
     private final GoalService goalService;
     private final AchievementService achievementService;
     private final RoutineService routineService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void seedUser() {
@@ -35,7 +37,7 @@ public class SeedServiceImpl implements SeedService {
                     .email("4orapa@abv.bg")
                     .age(17)
                     .birthDate(LocalDate.now())
-                    .password("4orapa")
+                    .password(passwordEncoder.encode("4orapa"))
                     .build();
             userService.save(build);
 

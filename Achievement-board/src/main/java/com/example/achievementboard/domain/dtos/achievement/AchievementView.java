@@ -34,7 +34,7 @@ public class AchievementView {
         this.endDate = achievement.getEndDate();
         this.difficulty = achievement.getDifficulty();
         this.userId = achievement.getUserEntity().getId();
-        this.routineId = achievement.getRoutineEntity().getId();
+        this.routineId = achievement.getRoutineEntity() == null ? null : achievement.getRoutineEntity().getId();
         this.dayTook = achievement.getDayTook();
         this.pictureRes = achievement.getPictureRes();
     }

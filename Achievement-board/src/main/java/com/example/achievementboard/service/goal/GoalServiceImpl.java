@@ -121,6 +121,11 @@ public class GoalServiceImpl implements GoalService {
         deleteGoal(id);
     }
 
+    @Override
+    public List<GoalView> getAllGoalViews(Long id) {
+        return goalRepository.findAllByUserEntity_Id(id).stream().map(GoalView::new).toList();
+    }
+
     private static void setPicture(GoalEntity entity) {
         if(entity.getDifficulty().equals(Difficulty.EASY)){
             entity.setPictureRes("/pic/easy.jpg");

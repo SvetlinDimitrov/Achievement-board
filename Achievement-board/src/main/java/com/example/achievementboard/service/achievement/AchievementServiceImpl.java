@@ -101,6 +101,11 @@ public class AchievementServiceImpl implements AchievementService {
         achievementRepository.deleteById(l);
     }
 
+    @Override
+    public List<AchievementView> getAllAchievementsView(Long id) {
+        return achievementRepository.findAllByUserEntity_Id(id).stream().map(AchievementView::new).toList();
+    }
+
 
     private void fillAchievement(AchievementEntity entity) {
         long difference = ChronoUnit.DAYS.between(entity.getStartDate(), entity.getEndDate());

@@ -83,12 +83,12 @@ public class RoutineServiceImpl implements RoutineService {
 
         goalRepository.findAll()
                 .stream()
-                .filter(g -> g.getRoutineEntity().getId().equals(id))
+                .filter(g ->  g.getRoutineEntity() != null && g.getRoutineEntity().getId().equals(id))
                 .forEach(g -> g.setRoutineEntity(null));
 
         achievementRepository.findAll()
                 .stream()
-                .filter(a -> a.getRoutineEntity().getId().equals(id))
+                .filter(a -> a.getRoutineEntity() != null && a.getRoutineEntity().getId().equals(id))
                 .forEach(a -> a.setRoutineEntity(null));
 
         routineRepository.deleteById(id);

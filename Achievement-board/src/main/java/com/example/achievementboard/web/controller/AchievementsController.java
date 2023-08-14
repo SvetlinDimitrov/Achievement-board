@@ -22,13 +22,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class AchievementsController extends BaseController {
 
     private final AchievementService achievementService;
+    private final RoutineService routineService;
 
 
     @GetMapping
     public ModelAndView getAchievementPage(HttpSession session, ModelAndView modelAndView) {
         UserView user = getUser(session);
 
-        modelAndView.addObject("allAchievements", user.getAchievementViews());
+        modelAndView.addObject("allAchievements", achievementService.getAllAchievementsView(user.getId()));
         return setView("allAchievements", modelAndView);
     }
 
@@ -54,7 +55,7 @@ public class AchievementsController extends BaseController {
                                      ModelAndView modelAndView) {
         UserView user = getUser(session);
 
-        modelAndView.addObject("allRoutines",user.getRoutineViews());
+        modelAndView.addObject("allRoutines" ,routineService.getAllRoutines(user.getId()));
         return setView("achievementCreate", modelAndView);
     }
 
@@ -67,7 +68,7 @@ public class AchievementsController extends BaseController {
         DataChecker.check(result, achievementCreate.getStartDate(), achievementCreate.getEndDate(), "achievementCreate", "startDate");
 
         if (result.hasErrors()) {
-            modelAndView.addObject("allRoutines", user.getRoutineViews());
+            modelAndView.addObject("allRoutines", routineService.getAllRoutines(user.getId()));
             modelAndView.setViewName("achievementCreate");
             return modelAndView;
         }
@@ -85,7 +86,7 @@ public class AchievementsController extends BaseController {
 
         UserView user = getUser(session);
 
-        modelAndView.addObject("allRoutines", user.getRoutineViews());
+        modelAndView.addObject("allRoutines", routineService.getAllRoutines(user.getId()));
         modelAndView.addObject("achievementCreate", achievementEntity.toDto());
         return setView("achievementDetail", modelAndView);
     }
@@ -99,7 +100,7 @@ public class AchievementsController extends BaseController {
         DataChecker.check(result, achievementChange.getStartDate(), achievementChange.getEndDate(), "achievementCreate", "startDate");
 
         if (result.hasErrors()) {
-            modelAndView.addObject("allRoutines", user.getRoutineViews());
+            modelAndView.addObject("allRoutines", routineService.getAllRoutines(user.getId()));
             modelAndView.setViewName("achievementDetail");
             return modelAndView;
         }

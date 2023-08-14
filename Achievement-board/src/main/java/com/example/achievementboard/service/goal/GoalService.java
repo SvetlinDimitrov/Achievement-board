@@ -4,8 +4,6 @@ import com.example.achievementboard.domain.dtos.goal.GoalCreate;
 import com.example.achievementboard.domain.dtos.goal.GoalChange;
 import com.example.achievementboard.domain.dtos.goal.GoalView;
 import com.example.achievementboard.domain.entity.GoalEntity;
-import com.example.achievementboard.domain.entity.RoutineEntity;
-import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.service.BaseService;
 
 import java.util.List;
@@ -26,4 +24,5 @@ public interface GoalService extends BaseService<GoalEntity> {
 
     void finishGoal(Long l);
 
+    List<GoalView> getAllGoalViews(Long id);
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -16,13 +16,13 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
         </li>
     </div>
     <div class="">
@@ -37,7 +37,7 @@
     </div>
     <div class="container w-50 p-5 ">
         <form
-                th:action="@{/goalEntity/create}"
+                th:action="@{/goal/create}"
                 th:object="${goalCreate}"
                 th:method = "post"
         >
@@ -84,7 +84,7 @@
                 <select th:field="${goalCreate.importance}"
                         id="importance" class="form-select">
                     <option value="" selected>Select importance</option>
-                    <option th:each = "importance : ${T(com.example.achievementboard.constants.enums.Importance).values()}"
+                    <option th:each = "importance : ${T(com.example.achievementboard.domain.constants.enums.Importance).values()}"
                             th:text="${importance}" th:value="${importance}"></option>
                 </select>
                 <div class="alert alert-danger " role="alert"
@@ -103,7 +103,7 @@
                 <select th:field="${goalCreate.difficulty}"
                         id="diff" class="form-select">
                     <option value="" selected>Select difficulty</option>
-                    <option th:each = "diff : ${T(com.example.achievementboard.constants.enums.Difficulty).values()}"
+                    <option th:each = "diff : ${T(com.example.achievementboard.domain.constants.enums.Difficulty).values()}"
                             th:text="${diff}" th:value="${diff}">Select level</option>
                 </select>
                 <div class="alert alert-danger " role="alert"

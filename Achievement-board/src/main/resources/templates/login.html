@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -20,38 +20,31 @@
     <div class="container w-25  p-5">
         <form
                 th:action="@{/login}"
-                th:object="${loginUser}"
                 th:method = "post" >
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                       th:field = "${loginUser.email}"/>
-                <div th:if = "${#fields.hasErrors('email')}"
-                     th:errors = "*{email}"
-                        class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
-                  </div>
+                <label for="exampleInputEmail1"
+                       class="form-label">Email address</label>
+                <input type="email"
+                       class="form-control"
+                       name="email"
+                       id="exampleInputEmail1"
+                       aria-describedby="emailHelp"/>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" th:field = "${loginUser.password}" />
-                <div th:if = "${#fields.hasErrors('password')}"
-                     th:errors = "*{password}"
+                <label for="exampleInputPassword1"
+                       class="form-label">Password</label>
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       id="exampleInputPassword1"/>
+                <div th:if="${param.error}"
                         class="alert alert-danger " role="alert">
-                    A simple danger alert—check it out!
+                    Password or Email does not match
                   </div>
             </div>
 
-            <div class="mb-3">
-                <label for="exampleInputPassword2" class="form-label">ConfirmPassword</label>
-                <input type="password" class="form-control" id="exampleInputPassword2" th:field = "*{confirmPassword}"/>
-                <div th:if = "${#fields.hasErrors('${loginUser}') || #fields.hasErrors('confirmPassword')}"
-                     th:errors = "${loginUser}"
-                        class="alert alert-danger " role="alert">
-                    You need to fill this !
-                  </div>
 
-            </div>
+
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
 </div>

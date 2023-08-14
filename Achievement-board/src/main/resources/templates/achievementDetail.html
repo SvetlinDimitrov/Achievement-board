@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -16,13 +16,13 @@
             <a class="nav-link text-white " th:href="@{/}">Home</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white " th:href="@{/goalEntity}">Goals</a>
+            <a class="nav-link text-white " th:href="@{/goal}">Goals</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/routineEntity}">Routines</a>
+            <a class="nav-link text-white" th:href="@{/routine}">Routines</a>
         </li>
         <li class="d-inline-block nav-item">
-            <a class="nav-link text-white" th:href="@{/achievementEntity}">Achievements</a>
+            <a class="nav-link text-white" th:href="@{/achievement}">Achievements</a>
         </li>
     </div>
     <div class="">
@@ -34,7 +34,7 @@
     </div>
     <div class="container w-50 p-5 ">
         <form
-                th:action="@{/achievementEntity/detailEdit}"
+                th:action="@{/achievement/detailEdit}"
                 th:object="${achievementCreate}"
                 th:method = "post"
         >
@@ -69,7 +69,7 @@
                 <label for="diff">Difficulty</label>
                 <select th:field="${achievementCreate.difficulty}"
                         id="diff" class="form-select">
-                    <option th:each = "diff : ${T(com.example.achievementboard.constants.enums.Difficulty).values()}"
+                    <option th:each = "diff : ${T(com.example.achievementboard.domain.constants.enums.Difficulty).values()}"
                             th:text="${diff}" th:value="${diff}"></option>
                 </select>
                 <div class="alert alert-danger " role="alert"
@@ -119,7 +119,7 @@
                         <button type="submit"  class="btn btn-primary w-50">Save</button>
                     </div>
                     <div class="col align-self-end text-end">
-                        <a type="submit" th:href="@{/achievementEntity/delete/{id}(id=${achievementCreate.id})}" class="btn btn-primary w-50">Delete</a>
+                        <a type="submit" th:href="@{/achievement/delete/{id}(id=${achievementCreate.id})}" class="btn btn-primary w-50">Delete</a>
                     </div>
                     
                 </div>

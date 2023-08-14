@@ -1,5 +1,6 @@
 package com.example.achievementboard.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,12 +14,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests(
-                request-> request.anyRequest().permitAll()
-        ).build();
+                        request -> request
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                                .requestMatchers("/login", "/register").anonymous()
+                                .anyRequest().authenticated()
+                ).formLogin(formLogin ->
+                        formLogin
+                                .usernameParameter("email")
+                                .passwordParameter("password")
+                                .loginPage("/login")
+                                .failureUrl("/login?error=true")
+                                .defaultSuccessUrl("/", true)
+                )
+                .build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

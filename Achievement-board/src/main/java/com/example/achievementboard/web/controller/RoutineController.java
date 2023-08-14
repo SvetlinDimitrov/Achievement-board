@@ -22,7 +22,7 @@ public class RoutineController extends BaseController {
     public ModelAndView getRoutinePage(HttpSession session, ModelAndView modelAndView) {
         UserView user = getUser(session);
 
-        modelAndView.addObject("allRoutines", user.getRoutineViews());
+        modelAndView.addObject("allRoutines", service.getAllRoutines(user.getId()));
         return setView("allRoutines", modelAndView);
     }
 
@@ -61,7 +61,7 @@ public class RoutineController extends BaseController {
         }
 
         service.add(createRoutine, user.getId());
-        return redirect("/routineEntity", modelAndView);
+        return redirect("/routine", modelAndView);
     }
 
     @GetMapping("/detail/{id}")
@@ -82,7 +82,7 @@ public class RoutineController extends BaseController {
         }
 
         service.edit(viewRoutine);
-        return redirect("/routineEntity", modelAndView);
+        return redirect("/routine", modelAndView);
     }
 
     @GetMapping("/delete/{id}")
@@ -90,6 +90,6 @@ public class RoutineController extends BaseController {
                                       ModelAndView modelAndView) {
 
         service.deleteRoutine(Long.parseLong(id));
-        return redirect("/routineEntity", modelAndView);
+        return redirect("/routine", modelAndView);
     }
 }

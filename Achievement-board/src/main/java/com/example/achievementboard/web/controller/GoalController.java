@@ -6,6 +6,7 @@ import com.example.achievementboard.domain.dtos.goal.GoalCreate;
 import com.example.achievementboard.domain.dtos.user.UserView;
 import com.example.achievementboard.domain.entity.GoalEntity;
 import com.example.achievementboard.service.goal.GoalService;
+import com.example.achievementboard.service.routine.RoutineService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,12 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class GoalController extends BaseController{
 
     private final GoalService goalService;
+    private final RoutineService routineService;
 
     @GetMapping
     public ModelAndView getGoalPage(HttpSession session , ModelAndView modelAndView){
         UserView user = getUser(session);
 
-        modelAndView.addObject("allGoals" , user.getGoalViews());
+        modelAndView.addObject("allGoals" , goalService.getAllGoalViews(user.getId()));
         return setView("allGoals" , modelAndView);
     }
 
@@ -33,7 +35,7 @@ public class GoalController extends BaseController{
     public ModelAndView getGoalsSortedByEndDate(HttpSession session , ModelAndView modelAndView){
         UserView user = getUser(session);
 
-        modelAndView.addObject("allGoals" , user.getGoalViews());
+        modelAndView.addObject("allGoals" , goalService.getAllGoalViews(user.getId()));
         return setView("allGoals" , modelAndView);
     }
 
@@ -58,7 +60,7 @@ public class GoalController extends BaseController{
                                    ModelAndView modelAndView,
                                    HttpSession session){
         UserView user = getUser(session);
-        modelAndView.addObject("allRoutines" , user.getRoutineViews());
+        modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user.getId()));
 
         return setView("goalCreate.html" , modelAndView);
     }
@@ -71,7 +73,7 @@ public class GoalController extends BaseController{
         DataChecker.check(result ,goalCreate.getStartDate() , goalCreate.getEndDate() ,"goalCreate" , "startDate");
 
         if(result.hasErrors()){
-            modelAndView.addObject("allRoutines" , user.getRoutineViews());
+            modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user.getId()));
             modelAndView.setViewName("goalCreate");
             return modelAndView;
         }
@@ -87,7 +89,7 @@ public class GoalController extends BaseController{
         UserView user = getUser(session);
         GoalEntity goalEntity = goalService.getById(Long.parseLong(id));
 
-        modelAndView.addObject("allRoutines" , user.getRoutineViews());
+        modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user.getId()));
         modelAndView.addObject("currentGoal" , goalEntity.toGoalView());
 
         return setView("goalDetail.html" , modelAndView);
@@ -101,7 +103,7 @@ public class GoalController extends BaseController{
         DataChecker.check(result , goalChange.getBeginDate() , goalChange.getEndDate() ,"currentGoal" , "beginDate");
 
         if(result.hasErrors()){
-            modelAndView.addObject("allRoutines" , user.getRoutineViews());
+            modelAndView.addObject("allRoutines" , routineService.getAllRoutines(user.getId()));
             modelAndView.setViewName("goalDetail");
             return modelAndView;
         }

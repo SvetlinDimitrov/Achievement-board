@@ -44,11 +44,13 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
+    @Transactional
     public List<RoutineView> getAllRoutines(Long userId) {
         return routineRepository.findAllByUserEntity_Id(userId).stream().map(RoutineView::new).toList();
     }
 
     @Override
+    @Transactional
     public List<RoutineView> getAllRoutinesSortedByDifficulty(Long userId) {
         return routineRepository.findAllByUserEntity_Id(userId).stream()
                 .map(RoutineView::new)
@@ -57,6 +59,7 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
+    @Transactional
     public List<RoutineView> getAllRoutinesSortByHourSpend(Long userId) {
         return routineRepository.findAllByUserEntity_Id(userId).stream()
                 .map(RoutineView::new)

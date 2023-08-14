@@ -5,6 +5,7 @@ import com.example.achievementboard.domain.dtos.user.UserView;
 import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.repos.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public boolean isEmpty() {
@@ -43,11 +45,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(RegisterUser user) {
-        repository.save(user.toUser());
+        UserEntity userToSave = user.toUser();
+        userToSave.setPassword(passwordEncoder.encode(userToSave.getPassword()));
+        repository.save(userToSave);
     }
 
 
     @Override
+    @Transactional
     public UserView getByEmail(String email) {
         return new UserView(repository.findByEmail(email).orElseThrow());
     }

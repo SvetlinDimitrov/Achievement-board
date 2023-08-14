@@ -11,6 +11,7 @@ import com.example.achievementboard.repos.UserRepository;
 import com.example.achievementboard.service.routine.RoutineService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -35,6 +36,7 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
+    @Transactional
     public AchievementEntity getById(Long id) {
         return achievementRepository.findById(id).orElseThrow();
     }
@@ -82,6 +84,7 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
+    @Transactional
     public void edit(AchievementChange achievementChange) {
         AchievementEntity achievementEntityToEdit = getById(achievementChange.getId());
         achievementEntityToEdit.setName(achievementChange.getName());
@@ -102,6 +105,7 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
+    @Transactional
     public List<AchievementView> getAllAchievementsView(Long id) {
         return achievementRepository.findAllByUserEntity_Id(id).stream().map(AchievementView::new).toList();
     }

@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=, initial-scale=1.0"/>
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
 </head>
 
 <body class="bg-dark text-white">
@@ -26,97 +26,102 @@
         </li>
     </div>
     <div class="">
-        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+        <form th:action="@{/logout}"
+              method="post">
+            <button type="submit" class="nav-link text-white">Logout</button>
+        </form>
     </div>
 </ul>
-    <div class="container text-center p-5">
-        <h1>Add Routine</h1>
-    </div>
-    <div class="container text-center">
-        <img src="/pic/routineEntity.png" class="rounded w-25" alt="...">
-    </div>
-    <div class="container w-50 p-5 ">
-        <form
-                th:action="@{/routine/create}"
-                th:object="${createRoutine}"
-                th:method = "post"
-        >
-            <div >
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" th:field = "${createRoutine.name}"/>
-                <div class="alert alert-danger " role="alert"
-                     th:if = "${#fields.hasErrors('name')}"
-                     th:errors = "*{name}">
-                    A simple danger alert—check it out!
-                </div>
-                <div id="usernameHelper" class="form-text text-white"
-                     th:if = "${!#fields.hasErrors('name')}">
-                    You need to fill this !
-                </div>
-            </div>
-            
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="description" th:field = "${createRoutine.description}"/>
-            </div>
-
-            <div class="mb-3">
-                <label for="diff">Difficulty</label>
-                <select th:field="${createRoutine.difficulty}"
-                        id="diff" class="form-select">
-                    <option value="" selected>Select difficulty</option>
-                    <option th:each = "diff : ${T(com.example.achievementboard.domain.constants.enums.Difficulty).values()}"
-                            th:text="${diff}" th:value="${diff}">Select level</option>
-                </select>
-                <div class="alert alert-danger " role="alert"
-                     th:if = "${#fields.hasErrors('difficulty')}"
-                     th:errors = "*{difficulty}">
-                    A simple danger alert—check it out!
-                </div>
-                <div id="difficultyHelper" class="form-text text-white"
-                     th:if = "${!#fields.hasErrors('difficulty')}">
-                    You must choose difficulty !
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="hoursSpend" class="form-label">Hours Spending</label>
-                <input type="number" step="0.1" class="form-control" id="hoursSpend" th:field = "${createRoutine.hoursSpend}" />
-                <div class="alert alert-danger " role="alert"
-                     th:if = "${#fields.hasErrors('hoursSpend')}"
-                     th:errors = "*{hoursSpend}">
-                    A simple danger alert—check it out!
-                </div>
-                <div id="hoursSpendHelper" class="form-text text-white"
-                     th:if = "${!#fields.hasErrors('hoursSpend')}">
-                    You must spend at least some time on your routines.
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="days" class="form-label">Days</label>
-                <input  id = "days" th:field="*{days}"
-                        name="days"
-                        th:each="day : ${T(com.example.achievementboard.domain.constants.enums.DaysOfTheWeek).values()}"
-                        class="m-3" type="checkbox"
-                        th:value="${day}"
-                        th:text="${day}">
-                <div class="alert alert-danger " role="alert"
-                     th:if = "${#fields.hasErrors('days')}"
-                     th:errors = "*{days}">
-                    A simple danger alert—check it out!
-                </div>
-                <div id="daysHelper" class="form-text text-white"
-                     th:if = "${!#fields.hasErrors('days')}">
-                    Choose at least 1 day!
-                </div>
-            </div>
-
-
-            <button type="submit" class="btn btn-primary">Add Routine</button>
-        </form>
+<div class="container text-center p-5">
+    <h1>Add Routine</h1>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+<div class="container text-center">
+    <img src="/pic/routineEntity.png" class="rounded w-25" alt="...">
+</div>
+<div class="container w-50 p-5 ">
+    <form
+            th:action="@{/routine/create}"
+            th:object="${createRoutine}"
+            th:method="post"
+    >
+        <div>
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" th:field="${createRoutine.name}"/>
+            <div class="alert alert-danger " role="alert"
+                 th:if="${#fields.hasErrors('name')}"
+                 th:errors="*{name}">
+                A simple danger alert—check it out!
+            </div>
+            <div id="usernameHelper" class="form-text text-white"
+                 th:if="${!#fields.hasErrors('name')}">
+                You need to fill this !
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" th:field="${createRoutine.description}"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="diff">Difficulty</label>
+            <select th:field="${createRoutine.difficulty}"
+                    id="diff" class="form-select">
+                <option value="" selected>Select difficulty</option>
+                <option th:each="diff : ${T(com.example.achievementboard.domain.constants.enums.Difficulty).values()}"
+                        th:text="${diff}" th:value="${diff}">Select level
+                </option>
+            </select>
+            <div class="alert alert-danger " role="alert"
+                 th:if="${#fields.hasErrors('difficulty')}"
+                 th:errors="*{difficulty}">
+                A simple danger alert—check it out!
+            </div>
+            <div id="difficultyHelper" class="form-text text-white"
+                 th:if="${!#fields.hasErrors('difficulty')}">
+                You must choose difficulty !
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="hoursSpend" class="form-label">Hours Spending</label>
+            <input type="number" step="0.1" class="form-control" id="hoursSpend"
+                   th:field="${createRoutine.hoursSpend}"/>
+            <div class="alert alert-danger " role="alert"
+                 th:if="${#fields.hasErrors('hoursSpend')}"
+                 th:errors="*{hoursSpend}">
+                A simple danger alert—check it out!
+            </div>
+            <div id="hoursSpendHelper" class="form-text text-white"
+                 th:if="${!#fields.hasErrors('hoursSpend')}">
+                You must spend at least some time on your routines.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="days" class="form-label">Days</label>
+            <input id="days" th:field="*{days}"
+                   name="days"
+                   th:each="day : ${T(com.example.achievementboard.domain.constants.enums.DaysOfTheWeek).values()}"
+                   class="m-3" type="checkbox"
+                   th:value="${day}"
+                   th:text="${day}">
+            <div class="alert alert-danger " role="alert"
+                 th:if="${#fields.hasErrors('days')}"
+                 th:errors="*{days}">
+                A simple danger alert—check it out!
+            </div>
+            <div id="daysHelper" class="form-text text-white"
+                 th:if="${!#fields.hasErrors('days')}">
+                Choose at least 1 day!
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Add Routine</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
 </body>

@@ -12,6 +12,7 @@ import com.example.achievementboard.repos.UserRepository;
 import com.example.achievementboard.service.achievement.AchievementService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Transactional
     public GoalEntity getById(Long id) {
         return goalRepository.findById(id).orElseThrow();
     }
@@ -46,11 +48,13 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Transactional
     public List<GoalView> getAllGoalsSortedByDate(Long userId) {
         return goalRepository.findAllByUserEntity_IdOrderByEndDate(userId).stream().map(GoalView::new).toList();
     }
 
     @Override
+    @Transactional
     public List<GoalView> getAllGoalsSortByImportance(Long userId) {
         return goalRepository.findAllByUserEntity_Id(userId)
                 .stream()
@@ -60,6 +64,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Transactional
     public List<GoalView> getAllGoalsSortByDifficulty(Long userId) {
         return goalRepository.findAllByUserEntity_Id(userId)
                 .stream()
@@ -86,6 +91,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Transactional
     public void edit(GoalChange goalChange) {
         GoalEntity edit = getById(goalChange.getId());
         edit.setName(goalChange.getName());
@@ -106,6 +112,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Transactional
     public void finishGoal(Long id) {
         GoalEntity goalEntity = getById(id);
         AchievementEntity newAchievementEntity = AchievementEntity.builder()
@@ -122,6 +129,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Transactional
     public List<GoalView> getAllGoalViews(Long id) {
         return goalRepository.findAllByUserEntity_Id(id).stream().map(GoalView::new).toList();
     }

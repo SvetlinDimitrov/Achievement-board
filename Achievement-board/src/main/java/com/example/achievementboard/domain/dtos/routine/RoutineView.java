@@ -3,10 +3,7 @@ package com.example.achievementboard.domain.dtos.routine;
 import com.example.achievementboard.domain.constants.enums.DaysOfTheWeek;
 import com.example.achievementboard.domain.constants.enums.Difficulty;
 import com.example.achievementboard.domain.entity.RoutineEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class RoutineView {
 

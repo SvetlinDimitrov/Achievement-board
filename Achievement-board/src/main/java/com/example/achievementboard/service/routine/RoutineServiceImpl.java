@@ -2,11 +2,10 @@ package com.example.achievementboard.service.routine;
 
 import com.example.achievementboard.domain.constants.exception.RoutineNotFoundException;
 import com.example.achievementboard.domain.constants.exception.UserNotFoundException;
-import com.example.achievementboard.domain.dtos.routine.RoutineCreate;
 import com.example.achievementboard.domain.dtos.routine.RoutineChange;
+import com.example.achievementboard.domain.dtos.routine.RoutineCreate;
 import com.example.achievementboard.domain.dtos.routine.RoutineView;
 import com.example.achievementboard.domain.entity.RoutineEntity;
-import com.example.achievementboard.domain.entity.UserEntity;
 import com.example.achievementboard.repos.AchievementRepository;
 import com.example.achievementboard.repos.GoalRepository;
 import com.example.achievementboard.repos.RoutineRepository;

@@ -2,7 +2,7 @@
 #### Provides the ability to track your goals, achievements, and routines.
 
 ## Why i made it ?
-I created this project to graduate from Software University. This project will be converted into a full REST API with Angular for the front end in the future.
+I created this project to practice and refine my skills.
 
 ## What does it contain? 
 This project involves server-side rendering (Thymeleaf) and MySQL for the database.
